@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rg_menu"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/main_footer_bg"
+    android:orientation="horizontal">
+
+    <!-- android:paddingLeft="0dp"加这个是为了让内容能够剧中 -->
+    <RadioButton
+        android:id="@+id/rb_assignment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bar_selector"
+        android:button="@null"
+        android:drawableTop="@android:drawable/ic_menu_recent_history"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:text="社区" />
+
+    <RadioButton
+        android:id="@+id/rb_complete"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bar_selector"
+        android:button="@null"
+        android:drawableTop="@android:drawable/ic_menu_edit"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:text="发现" />
+
+    <RadioButton
+        android:id="@+id/rb_addsubmission"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bar_selector"
+        android:button="@null"
+        android:drawableTop="@android:drawable/ic_input_add"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:text="发布" />
+
+    <RadioButton
+        android:id="@+id/rb_submission"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bar_selector"
+        android:button="@null"
+        android:drawableTop="@android:drawable/ic_menu_send"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:text="地图" />
+
+    <RadioButton
+        android:id="@+id/rb_person"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bar_selector"
+        android:button="@null"
+        android:drawableTop="@android:drawable/ic_menu_info_details"
+        android:gravity="center"
+        android:paddingLeft="0dp"
+        android:text="商城" />
+</RadioGroup>

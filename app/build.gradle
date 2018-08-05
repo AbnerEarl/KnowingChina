@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+def AAVersion = "4.3.1"
+
+android {
+    compileSdkVersion 27
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/rxjava.properties'
+    }
+    defaultConfig {
+        applicationId "com.example.frank.wuhanjikong"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support:support-v4:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //数据库操作
+    compile 'com.j256.ormlite:ormlite-core:4.48'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'com.jaeger.ninegridimageview:library:1.0.2'
+    //compile 'com.bigkoo:svprogresshud:1.0.0'
+    compile 'me.gujun.android.taggroup:library:1.4@aar'
+    implementation files('libs/commons-net-3.3.jar')
+    implementation files('libs/httpclient-4.2.5.jar')
+    implementation files('libs/httpcore-4.2.4.jar')
+
+    //网络请求框架 novate/rxjava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'com.tamic.novate:novate:1.5.2.3'
+    //okhttp
+    compile 'com.squareup.okio:okio:1.11.0'
+    compile 'com.squareup.okhttp3:okhttp:3.5.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    //注解 及 控件绑定
+    //butterknife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //androidannotations
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
+    implementation "org.androidannotations:androidannotations-api:$AAVersion"
+
+    //图片加载处理
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
+    implementation 'com.android.support:design:27.1.1'
+}

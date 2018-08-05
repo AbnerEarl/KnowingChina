@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 把Fragment当作普通控件使用，这里没啥作用，就是作为一个标题栏，不用Fragment，直接写布局一样的 -->
+    <fragment
+        android:id="@+id/fg_title"
+        android:name="com.example.frank.wuhanjikong.fragment.TitleFragment"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <!-- 用一个帧布局来占一个位置，目的是给fragment用 -->
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </FrameLayout>
+
+    <!-- 底部三个按钮，我们用RadioGroup来实现 -->
+    <include layout="@layout/menu_bar" />
+
+</LinearLayout>
