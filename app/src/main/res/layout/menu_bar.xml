@@ -4,7 +4,7 @@
     android:id="@+id/rg_menu"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/main_footer_bg"
+    android:background="#FFFFFF"
     android:orientation="horizontal">
 
     <!-- android:paddingLeft="0dp"加这个是为了让内容能够剧中 -->
@@ -15,10 +15,11 @@
         android:layout_weight="1"
         android:background="@drawable/bar_selector"
         android:button="@null"
-        android:drawableTop="@android:drawable/ic_menu_recent_history"
+        android:drawableTop="@drawable/home_red"
         android:gravity="center"
         android:paddingLeft="0dp"
-        android:text="社区" />
+        android:text="ChinaTown"
+        android:textColor="#EE5C42"/>
 
     <RadioButton
         android:id="@+id/rb_complete"
@@ -27,10 +28,12 @@
         android:layout_weight="1"
         android:background="@drawable/bar_selector"
         android:button="@null"
-        android:drawableTop="@android:drawable/ic_menu_edit"
+        android:drawableTop="@drawable/discover"
         android:gravity="center"
         android:paddingLeft="0dp"
-        android:text="发现" />
+        android:text="Discover"
+        android:textColor="#A8A8A8"
+        />
 
     <RadioButton
         android:id="@+id/rb_addsubmission"
@@ -39,10 +42,10 @@
         android:layout_weight="1"
         android:background="@drawable/bar_selector"
         android:button="@null"
-        android:drawableTop="@android:drawable/ic_input_add"
         android:gravity="center"
-        android:paddingLeft="0dp"
-        android:text="发布" />
+        android:drawableTop="@drawable/add_info"
+        android:paddingTop="3dp"
+         />
 
     <RadioButton
         android:id="@+id/rb_submission"
@@ -51,10 +54,11 @@
         android:layout_weight="1"
         android:background="@drawable/bar_selector"
         android:button="@null"
-        android:drawableTop="@android:drawable/ic_menu_send"
+        android:drawableTop="@drawable/map"
         android:gravity="center"
         android:paddingLeft="0dp"
-        android:text="地图" />
+        android:text="Map"
+        android:textColor="#A8A8A8"/>
 
     <RadioButton
         android:id="@+id/rb_person"
@@ -63,8 +67,9 @@
         android:layout_weight="1"
         android:background="@drawable/bar_selector"
         android:button="@null"
-        android:drawableTop="@android:drawable/ic_menu_info_details"
+        android:drawableTop="@drawable/mail"
         android:gravity="center"
         android:paddingLeft="0dp"
-        android:text="商城" />
+        android:text="Mail"
+        android:textColor="#A8A8A8"/>
 </RadioGroup>

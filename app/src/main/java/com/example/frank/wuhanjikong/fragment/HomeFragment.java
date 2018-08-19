@@ -224,7 +224,6 @@ public class HomeFragment extends Fragment {
                 holder.publishTime = (TextView) convertView.findViewById(R.id.textView4);
                 holder.nickName = (TextView) convertView.findViewById(R.id.textView5);
                 holder.contentInfo = (TextView) convertView.findViewById(R.id.textView6);
-                holder.discussInfo = (TextView) convertView.findViewById(R.id.textView7);
                 holder.imageView=(ImageView) convertView.findViewById(R.id.img_logo);
 
 

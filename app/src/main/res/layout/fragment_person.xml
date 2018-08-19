@@ -8,6 +8,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="\n    功能正在开发中，敬请期待！" />
+        android:text="\n  Features are under development, please look forward to it!" />
 
 </FrameLayout>

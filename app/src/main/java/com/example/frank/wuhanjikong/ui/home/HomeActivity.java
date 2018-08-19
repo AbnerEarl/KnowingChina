@@ -98,7 +98,7 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 TitleFragment.setVisiblePerson();
                 transaction.replace(R.id.fl_content, f1);
                 transaction.commit();
-                TitleFragment.setTitle("精彩推荐");
+                TitleFragment.setTitle("search");
                 break;
             case R.id.rb_complete :
                 hideFragment(transaction);
@@ -106,7 +106,7 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 TitleFragment.setVisiblePerson();
                 transaction.replace(R.id.fl_content, f2);
                 transaction.commit();
-                TitleFragment.setTitle("最新发现");
+                TitleFragment.setTitle("search");
                 break;
             case R.id.rb_submission :
                 hideFragment(transaction);
@@ -114,7 +114,7 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 TitleFragment.setVisiblePerson();
                 transaction.replace(R.id.fl_content, f3);
                 transaction.commit();
-                TitleFragment.setTitle("地图导航");
+                TitleFragment.setTitle("search");
                 break;
             case R.id.rb_person :
                 hideFragment(transaction);
@@ -122,7 +122,7 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 transaction.replace(R.id.fl_content, f4);
                 transaction.commit();
                 TitleFragment.setVisiblePerson();
-                TitleFragment.setTitle("中心商城");
+                TitleFragment.setTitle("search");
                 break;
             case R.id.rb_addsubmission :
                 hideFragment(transaction);
@@ -130,7 +130,6 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 transaction.replace(R.id.fl_content, f5);
                 transaction.commit();
                 TitleFragment.setInvisiblePerson();
-                TitleFragment.setTitle("发布动态");
                 break;
 
             default :

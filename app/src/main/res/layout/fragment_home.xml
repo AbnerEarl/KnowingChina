@@ -20,7 +20,7 @@
         android:layout_toRightOf="@+id/text2"
         android:layout_weight="1"
         android:gravity="center_vertical|center_horizontal"
-        android:text="关注" />
+        android:text="Command" />
 
     <TextView
         android:id="@+id/textView2"
@@ -28,7 +28,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:gravity="center_vertical|center_horizontal"
-        android:text="推荐" />
+        android:text="Follow" />
 
     <TextView
         android:id="@+id/textView3"
@@ -36,7 +36,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:gravity="center_vertical|center_horizontal"
-        android:text="附近" />
+        android:text="Nearby" />
 
     <TextView
         android:id="@+id/textView15"
@@ -44,7 +44,7 @@
         android:layout_height="40dp"
         android:layout_weight="1"
         android:gravity="center_vertical|center_horizontal"
-        android:text="学堂" />
+        android:text="Class" />
 
 </LinearLayout>
 

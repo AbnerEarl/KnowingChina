@@ -64,4 +64,5 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
     implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:gridlayout-v7:27.1.1'
 }

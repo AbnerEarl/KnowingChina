@@ -36,8 +36,8 @@ public class TitleFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_title, container, false);
-        title_text=view.findViewById(R.id.title_text);
-        person=view.findViewById(R.id.imageView2);
+        title_text=view.findViewById(R.id.title_search);
+        person=view.findViewById(R.id.menu);
 
         person.setOnClickListener(new View.OnClickListener() {
             @Override

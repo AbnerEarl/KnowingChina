@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!loginName.equals("")&&!passWord.equals("")){
             PersonInfo.userName=loginName;
             boolean isSaveSucess = SharePreferenceSave.saveUserInfo (LoginActivity.this, loginName, passWord );
-            Toast.makeText (LoginActivity.this,"登录成功", Toast.LENGTH_LONG ).show ();
+            Toast.makeText (LoginActivity.this,"Login Successfully", Toast.LENGTH_LONG ).show ();
             Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
@@ -109,13 +109,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 boolean isSaveSucess = SharePreferenceSave.saveUserInfo (LoginActivity.this, loginName, passWord );
                                 if (isSaveSucess){
                                     //Toast.makeText ( this,"保存成功", Toast.LENGTH_LONG ).show ();
-                                    L.g("保存成功");
+                                    L.g("Login Successfully");
                                 }else {
                                     //Toast.makeText ( this,"保存失败", Toast.LENGTH_LONG ).show ();
                                     L.g("保存失败");
                                 }
 
-                                Toast.makeText (LoginActivity.this,"登录成功", Toast.LENGTH_LONG ).show ();
+                                Toast.makeText (LoginActivity.this,"Login Successfully", Toast.LENGTH_LONG ).show ();
                                 Intent intent=new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(intent);
                                 finish();

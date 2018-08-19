@@ -6,38 +6,14 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:text="每天那些事" />
-
-    <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView5"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_below="@+id/textView4"
         android:text="TextView"
         android:textSize="18sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/img_logo"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="10dp"
-        android:text="TextView" />
 
     <ImageView
         android:id="@+id/img_logo"
@@ -53,9 +29,57 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageView2"
+        android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/ic_account_circle_black_48dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/img_logo"
+        app:srcCompat="@android:drawable/arrow_down_float" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_below="@+id/img_logo"
+        app:srcCompat="@drawable/like" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_below="@+id/img_logo"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/comments" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_below="@+id/img_logo"
         android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/img_logo"
+        android:layout_marginEnd="35dp"
+        app:srcCompat="@drawable/star" />
 </RelativeLayout>

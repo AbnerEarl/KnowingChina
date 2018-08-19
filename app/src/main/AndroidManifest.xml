@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/show"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -30,7 +30,10 @@
         <activity android:name=".ui.person.HskActivity" />
         <activity android:name=".ui.person.PersonCollectionActivity" />
         <activity android:name=".ui.person.SettingActivity" />
-        <activity android:name=".ui.person.ServerActivity"></activity>
+        <activity android:name=".ui.person.ServerActivity" />
+        <activity android:name=".ui.person.discoverActivity" />
+        <activity android:name=".ui.person.mapdetailActivity" />
+        <activity android:name=".ui.person.interestActivity"></activity>
     </application>
 
 </manifest>

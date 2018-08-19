@@ -9,29 +9,79 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:paddingTop="4dp"
         android:id="@+id/line_sort"
-        android:layout_height="wrap_content">
+        android:background="#FFFFFF"
+        android:layout_height="40dp">
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="Food" />
+            android:background="@drawable/shape"
+            android:text="food"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textSize="15dp"/>
+
 
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="drink" />
+            android:text="store"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="@drawable/shape"
+            android:textSize="16dp"/>
+
 
         <Button
             android:id="@+id/button5"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="play" />
+            android:background="@drawable/shape"
+            android:text="bar"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="@drawable/shape"
+            android:text="camera"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:background="@drawable/shape"
+            android:text="beaty"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:background="@drawable/shape"
+            android:text="more"
+            android:textSize="16dp"
+        />
+
 
     </LinearLayout>
 
@@ -42,5 +92,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/line_sort" />
+        android:layout_below="@+id/line_sort"
+        android:text="more"
+      />
+
 </RelativeLayout>
