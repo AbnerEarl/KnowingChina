@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.frank.wuhanjikong.ui.person.PersonMoneyActivity">
 
+
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="50dp"
@@ -62,4 +63,5 @@
         android:text="Coupons"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="227dp" />
+
 </android.support.constraint.ConstraintLayout>

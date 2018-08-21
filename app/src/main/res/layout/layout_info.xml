@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView6"
         android:layout_alignEnd="@+id/img_logo"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/expand2" />
 
     <ImageView
         android:id="@+id/imageView5"

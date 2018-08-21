@@ -57,7 +57,7 @@
             android:textAllCaps="false"
             android:gravity="center"
             android:background="@drawable/shape"
-            android:text="camera"
+            android:text="cinema"
             android:textSize="16dp"/>
 
         <Button

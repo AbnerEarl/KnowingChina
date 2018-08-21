@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="com.example.frank.wuhanjikong.fragment.AddInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -26,6 +27,12 @@
                 android:orientation="vertical">
 
 
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="24dp"
+                    android:layout_height="32dp"
+                    android:src="@mipmap/back_black" />
+
                 <EditText
                     android:id="@+id/editText"
                     android:layout_width="match_parent"
@@ -37,57 +44,59 @@
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/button2"
                     android:layout_toStartOf="@+id/button2"
-                    android:background="@drawable/editext_shape"
-                    android:ems="10"
-                    android:drawableLeft="@drawable/left_4"
-                    android:drawableRight="@drawable/sent"
                     android:drawablePadding="10dp"
-                    android:hint="\n say something......."
+                    android:ems="10"
+                    android:hint="say something......."
                     android:inputType="textPersonName"
+                    android:padding="10dp"
                     android:paddingTop="40dp"
                     android:textSize="20sp" />
 
-                <EditText
+                <Button
                     android:id="@+id/editText2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
+                    android:layout_marginTop="20dp"
                     android:drawableLeft="@drawable/camera"
                     android:drawablePadding="15dp"
                     android:ems="10"
+                    android:gravity=""
+                    android:background="#FFFFFF"
                     android:hint="Photo/Video"
                     android:inputType="textPersonName"
                     android:textSize="20sp" />
 
-                <EditText
+                <Button
                     android:id="@+id/editText3"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-
-
+                    android:layout_marginTop="10dp"
+                    android:background="#FFFFFF"
                     android:drawableLeft="@drawable/point_of_interest"
                     android:drawablePadding="15dp"
                     android:ems="10"
+                    android:gravity=""
                     android:hint="location"
                     android:inputType="textPersonName"
                     android:textSize="20sp" />
 
-                <EditText
+                <Button
                     android:id="@+id/editText4"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:drawableLeft="@drawable/email"
+                    android:layout_marginTop="10dp"
+                    android:background="#FFFFFF"
+                    android:drawableLeft="@drawable/tags"
                     android:drawablePadding="15dp"
                     android:ems="10"
-                    android:hint="Mention"
+                    android:gravity=""
+                    android:hint="Theme"
                     android:inputType="textPersonName"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -96,5 +105,14 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/sent" />
+
 
 </RelativeLayout>

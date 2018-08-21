@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@drawable/loginback"
     android:orientation="vertical">
 
     <ImageView
@@ -93,10 +93,8 @@
 
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-
         android:layout_marginTop="50dp"
-
-        android:background="#ffffff"
+        android:background="@drawable/shape"
         android:text="Log in"
         android:textStyle="bold"
         android:textColor="#000000"

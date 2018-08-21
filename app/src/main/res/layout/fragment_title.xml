@@ -8,31 +8,31 @@
 
     <ImageView
         android:id="@+id/menu"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginLeft="4dp"
         android:background="@drawable/ic_menu_black_18dp" />
 
     <TextView
         android:id="@+id/title_search"
         android:layout_width="240dp"
-        android:layout_height="36dp"
+        android:layout_height="28dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/shape"
-        android:drawableLeft="@drawable/search"
+        android:background="@drawable/shape_bar"
+        android:drawableLeft="@drawable/search_bar"
         android:drawablePadding="10dp"
+        android:gravity=""
         android:hint="search"
-        android:gravity="fill"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
 
     <ImageView
         android:id="@+id/noti"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginRight="4dp"
-        android:background="@drawable/ic_notifications_none_black_18dp" />
+        android:background="@drawable/appointment_reminders" />
 
 </LinearLayout>
