@@ -1,12 +1,17 @@
 package com.example.frank.wuhanjikong.ui.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.frank.wuhanjikong.R;
+import com.example.frank.wuhanjikong.config.PersonInfo;
 import com.example.frank.wuhanjikong.ui.person.HskActivity;
 import com.example.frank.wuhanjikong.ui.person.PersonCollectionActivity;
 import com.example.frank.wuhanjikong.ui.person.PersonDetailActivity;
@@ -16,20 +21,33 @@ import com.example.frank.wuhanjikong.ui.person.SettingActivity;
 
 public class PersonalActivity extends AppCompatActivity {
 
-    private Button personInfo,personMoney,personHsk,personCollection,personSetting,personServer;
+    private Button personMoney,personHsk,personCollection,personSetting,myOrder,myCart,lookHelp;
+    private TextView personInfo,personName;
+    private ImageView person;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal);
 
-        personInfo=(Button)this.findViewById(R.id.button6);
-        personMoney=(Button)this.findViewById(R.id.button7);
-        personHsk=(Button)this.findViewById(R.id.button8);
+        personInfo=(TextView)this.findViewById(R.id.textView10);
+        personName=(TextView)this.findViewById(R.id.textView14);
+        myOrder=(Button)this.findViewById(R.id.button7);
+        myCart=(Button)this.findViewById(R.id.button8);
+        personMoney=(Button)this.findViewById(R.id.button6);
+        personHsk=(Button)this.findViewById(R.id.button10);
         personCollection=(Button)this.findViewById(R.id.button9);
-        personSetting=(Button)this.findViewById(R.id.button10);
-        personServer=(Button)this.findViewById(R.id.button11);
+        personSetting=(Button)this.findViewById(R.id.button12);
+        lookHelp=(Button)this.findViewById(R.id.button11);
+        person=(ImageView)this.findViewById(R.id.imageView14);
 
-        personInfo.setOnClickListener(new View.OnClickListener() {
+        if (PersonInfo.localSysUser!=null) {
+            personName.setText(PersonInfo.localSysUser.getNickName());
+            personInfo.setText(PersonInfo.localSysUser.getLoginName());
+        }else {
+
+        }
+
+        person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -73,11 +91,35 @@ public class PersonalActivity extends AppCompatActivity {
         });
 
 
-        personServer.setOnClickListener(new View.OnClickListener() {
+        lookHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(PersonalActivity.this, ServerActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        myCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(PersonalActivity.this).setMessage("敬请期待！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+            }
+        });
+
+        myOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(PersonalActivity.this).setMessage("敬请期待！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
             }
         });
 

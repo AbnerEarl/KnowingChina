@@ -12,7 +12,7 @@
         android:layout_height="58dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="32dp"
         android:text="No.103"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -21,30 +21,32 @@
 
 
     <RadioGroup
-        android:layout_width="382dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="460dp"
-        android:orientation="horizontal">
+        android:layout_marginEnd="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/button21"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableLeft="@drawable/menu"
             android:text="ask questions"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/button22"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="manual servies"
             android:drawableLeft="@drawable/phone_message"
+            android:text="manual servies"
 
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

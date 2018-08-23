@@ -1,9 +1,11 @@
 package com.example.frank.wuhanjikong.ui.home;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -25,10 +28,21 @@ import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.example.frank.wuhanjikong.R;
+import com.example.frank.wuhanjikong.entity.ContentInfo;
+import com.example.frank.wuhanjikong.entity.HskContent;
+import com.example.frank.wuhanjikong.fragment.HomeFragment;
+import com.example.frank.wuhanjikong.service.ApiService;
+import com.tamic.novate.Throwable;
+import com.tamic.novate.callback.RxStringCallback;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,15 +51,22 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ApplicationLoad extends AppCompatActivity {
 
     public WebView myWebView;
     private ProgressDialog dialog=null;
-    String urrl;
+    private String urrl;
 
     private ImageButton back;
     private TextView title;
+    private String titleInfo,contentInfo,contentId;
+    private TextView textViewTitle,textViewContent;
+    private Button hsk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +75,15 @@ public class ApplicationLoad extends AppCompatActivity {
 
         Intent intent=getIntent();
         urrl= intent.getStringExtra("url");
+        titleInfo=intent.getStringExtra("title");
+        contentInfo=intent.getStringExtra("content");
+        contentId=intent.getStringExtra("contentId");
 
 
+
+        textViewTitle=(TextView)findViewById(R.id.textView25);
+        textViewContent=(TextView)findViewById(R.id.textView23);
+        hsk=(Button)this.findViewById(R.id.button28);
         back=(ImageButton)this.findViewById(R.id.titleback);
         title=(TextView)this.findViewById(R.id.titleplain);
         //标题栏设置
@@ -67,10 +95,189 @@ public class ApplicationLoad extends AppCompatActivity {
             }
         });
 
-//http://www.google.cn/maps/@37.263579,74.9775024,4z?hl=en
+        textViewTitle.setText(titleInfo);
+        textViewContent.setText(contentInfo);
 
-        String str = urrl;
+
+        String str = urrl;//http://www.google.cn/maps/@37.263579,74.9775024,4z?hl=en
         Context context=ApplicationLoad.this;
+
+        hsk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout linearLayout=new LinearLayout(ApplicationLoad.this);
+                linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+                LinearLayout distinct=new LinearLayout(ApplicationLoad.this);
+                distinct.setBackgroundColor(Color.RED);
+                   /* ViewGroup.LayoutParams layoutParams=distinct.getLayoutParams();
+                    layoutParams.height=5;
+                    distinct.setLayoutParams(layoutParams);*/
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(5, 8, 5, 8);
+
+                TextView hsk1=new TextView(ApplicationLoad.this);
+                hsk1.setText("HSK1");
+                hsk1.setTextSize(18);
+                hsk1.setLayoutParams(lp);
+                hsk1.setGravity(Gravity.CENTER);
+
+                TextView hsk2=new TextView(ApplicationLoad.this);
+                hsk2.setTextSize(18);
+                hsk2.setGravity(Gravity.CENTER);
+                hsk2.setLayoutParams(lp);
+                hsk2.setText("HSK2");
+
+                TextView hsk3=new TextView(ApplicationLoad.this);
+                hsk3.setTextSize(18);
+                hsk3.setGravity(Gravity.CENTER);
+                hsk3.setLayoutParams(lp);
+                hsk3.setText("HSK3");
+
+                TextView hsk4=new TextView(ApplicationLoad.this);
+                hsk4.setTextSize(18);
+                hsk4.setGravity(Gravity.CENTER);
+                hsk4.setLayoutParams(lp);
+                hsk4.setText("HSK4");
+
+                TextView hsk5=new TextView(ApplicationLoad.this);
+                hsk5.setTextSize(18);
+                hsk5.setGravity(Gravity.CENTER);
+                hsk5.setLayoutParams(lp);
+                hsk5.setText("HSK5");
+
+                TextView hsk6=new TextView(ApplicationLoad.this);
+                hsk6.setTextSize(18);
+                hsk6.setGravity(Gravity.CENTER);
+                hsk6.setLayoutParams(lp);
+                hsk6.setText("HSK6");
+
+                TextView hsk7=new TextView(ApplicationLoad.this);
+                hsk7.setTextSize(18);
+                hsk7.setGravity(Gravity.CENTER);
+                hsk7.setLayoutParams(lp);
+                hsk7.setText("HSK7");
+
+                TextView hsk8=new TextView(ApplicationLoad.this);
+                hsk8.setTextSize(18);
+                hsk8.setGravity(Gravity.CENTER);
+                hsk8.setLayoutParams(lp);
+                hsk8.setText("HSK8");
+
+                linearLayout.addView(hsk1);
+                //linearLayout.addView(distinct);
+                linearLayout.addView(hsk2);
+                linearLayout.addView(hsk3);
+                linearLayout.addView(hsk4);
+                linearLayout.addView(hsk5);
+                linearLayout.addView(hsk6);
+                linearLayout.addView(hsk7);
+                linearLayout.addView(hsk8);
+
+                final AlertDialog alertDialog=new AlertDialog.Builder(ApplicationLoad.this).create();
+
+                hsk1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK1");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                hsk2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK2");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                hsk3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK3");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                hsk4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK4");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                hsk5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK5");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                hsk6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK6");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                hsk7.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK7");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+                hsk8.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        HashMap<String,String> map=new HashMap<>();
+                        map.put("contentId",contentId);
+                        map.put("hsk","HSK8");
+                        getContentInfoByHsk(JSON.toJSONString(map));
+                        alertDialog.dismiss();
+                    }
+                });
+
+               alertDialog.setView(linearLayout);
+              // alertDialog.setTitle("请选择HSK等级：");
+               alertDialog.show();
+
+
+            }
+        });
 
 
         myWebView = (WebView) findViewById(R.id.webview1);
@@ -249,6 +456,56 @@ public class ApplicationLoad extends AppCompatActivity {
 
     }
 
+
+
+    private void getContentInfoByHsk(final String hsk){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    Map<String, Object> paremetes = new HashMap<>();
+                    paremetes.put("data", hsk);
+                    ApiService.GetString(ApplicationLoad.this, "getContentInfoByHsk", paremetes, new RxStringCallback() {
+                        @Override
+                        public void onNext(Object tag, String response) {
+                            try{
+                                if (!response.contains("没有数据")&&!response.contains("查询失败")){
+
+                                    HskContent hskContent = JSON.parseObject(response,HskContent.class);
+                                    textViewTitle.setText(hskContent.getContentTitle());
+                                    textViewContent.setText(hskContent.getContentText());
+                                    Toast.makeText(ApplicationLoad.this,"当前HSK等级为："+hskContent.getHskLevel(),Toast.LENGTH_SHORT).show();
+                                }
+
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Object tag, Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onCancel(Object tag, Throwable e) {
+
+                        }
+                    });
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+    }
 
 
 

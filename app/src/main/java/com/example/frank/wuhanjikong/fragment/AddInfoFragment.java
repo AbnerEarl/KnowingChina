@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class AddInfoFragment extends Fragment {
 
     private Button button;
-    private EditText editText,urleditText;
+    private EditText editText,photo,location,mention;
 
     public AddInfoFragment(){
 
@@ -38,9 +38,9 @@ public class AddInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_add_info, container, false);
 
-        button=(Button)view.findViewById(R.id.button2);
+        button=(Button)view.findViewById(R.id.button20);
         editText=(EditText)view.findViewById(R.id.editText);
-        urleditText=(EditText)view.findViewById(R.id.editText2);
+        photo=(EditText)view.findViewById(R.id.editText2);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +51,7 @@ public class AddInfoFragment extends Fragment {
                 map.put("discussInfo","暂时没有评论");
                 map.put("tag","4");
                 map.put("time","刚刚");
-                map.put("url",urleditText.getText().toString());
+                map.put("url",photo.getText().toString());
                 PublicInfo.listItemCation.add(0,map);
                 Toast.makeText(getActivity(),"发布成功，可以在关注界面查看您的动态！",Toast.LENGTH_LONG).show();
                 editText.setText("");

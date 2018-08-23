@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import com.example.frank.wuhanjikong.ui.home.PersonalActivity;
 
 public class TitleFragment extends Fragment {
 
-    private static TextView title_text;
+    private static EditText search_keyword;
 
     private static ImageView person;
 
@@ -36,8 +37,9 @@ public class TitleFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_title, container, false);
-        title_text=view.findViewById(R.id.title_search);
-        person=view.findViewById(R.id.menu);
+        search_keyword=view.findViewById(R.id.editText5);
+
+        person=view.findViewById(R.id.menu_more);
 
         person.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,9 +52,9 @@ public class TitleFragment extends Fragment {
         return view;
     }
 
-    public static void setTitle(String title){
+   /* public static void setTitle(String title){
         title_text.setText(title);
-    }
+    }*/
     public static void setInvisiblePerson(){
         person.setVisibility(View.INVISIBLE);
     }

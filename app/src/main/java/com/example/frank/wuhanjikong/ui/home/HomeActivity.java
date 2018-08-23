@@ -1,5 +1,6 @@
 package com.example.frank.wuhanjikong.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,14 +11,30 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.example.frank.wuhanjikong.R;
+import com.example.frank.wuhanjikong.config.PersonInfo;
+import com.example.frank.wuhanjikong.config.local.SharePreferenceSave;
+import com.example.frank.wuhanjikong.entity.ContentInfo;
+import com.example.frank.wuhanjikong.entity.SysUser;
 import com.example.frank.wuhanjikong.fragment.AddInfoFragment;
 import com.example.frank.wuhanjikong.fragment.HomeFragment;
 import com.example.frank.wuhanjikong.fragment.PersonFragment;
 import com.example.frank.wuhanjikong.fragment.SubmissionFragment;
 import com.example.frank.wuhanjikong.fragment.TitleFragment;
 import com.example.frank.wuhanjikong.fragment.WorkFragment;
+import com.example.frank.wuhanjikong.service.ApiService;
+import com.example.frank.wuhanjikong.ui.login.LoginActivity;
+import com.example.frank.wuhanjikong.ui.map.MapMainActivity;
+import com.tamic.novate.Throwable;
+import com.tamic.novate.callback.RxStringCallback;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HomeActivity extends FragmentActivity implements OnClickListener {
 
@@ -79,6 +96,8 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
         transaction.replace(R.id.fl_content, f1);
         transaction.commit();
 
+        getUserInfo();
+
     }
 
 
@@ -98,7 +117,7 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 TitleFragment.setVisiblePerson();
                 transaction.replace(R.id.fl_content, f1);
                 transaction.commit();
-                TitleFragment.setTitle("search");
+               // TitleFragment.setTitle("search");
                 break;
             case R.id.rb_complete :
                 hideFragment(transaction);
@@ -106,15 +125,17 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 TitleFragment.setVisiblePerson();
                 transaction.replace(R.id.fl_content, f2);
                 transaction.commit();
-                TitleFragment.setTitle("search");
+               // TitleFragment.setTitle("search");
                 break;
             case R.id.rb_submission :
-                hideFragment(transaction);
+               /* hideFragment(transaction);
                 f3 = new SubmissionFragment();
                 TitleFragment.setVisiblePerson();
                 transaction.replace(R.id.fl_content, f3);
-                transaction.commit();
-                TitleFragment.setTitle("search");
+                transaction.commit();*/
+                //TitleFragment.setTitle("search");
+                Intent intent2=new Intent(HomeActivity.this,MapMainActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.rb_person :
                 hideFragment(transaction);
@@ -122,14 +143,16 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
                 transaction.replace(R.id.fl_content, f4);
                 transaction.commit();
                 TitleFragment.setVisiblePerson();
-                TitleFragment.setTitle("search");
+                //TitleFragment.setTitle("search");
                 break;
             case R.id.rb_addsubmission :
-                hideFragment(transaction);
+                /*hideFragment(transaction);
                 f5 = new AddInfoFragment();
                 transaction.replace(R.id.fl_content, f5);
                 transaction.commit();
-                TitleFragment.setInvisiblePerson();
+                TitleFragment.setInvisiblePerson();*/
+                Intent intent=new Intent(HomeActivity.this,PublishContentActivity.class);
+                startActivity(intent);
                 break;
 
             default :
@@ -156,5 +179,60 @@ public class HomeActivity extends FragmentActivity implements OnClickListener {
 
 
     }
+
+
+    private void getUserInfo(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+
+                    Map<String, Object> paremetes = new HashMap<>();
+                    paremetes.put("data", "查询个人信息");
+                    ApiService.GetString(HomeActivity.this, "personInfoMobile", paremetes, new RxStringCallback() {
+                        @Override
+                        public void onNext(Object tag, String response) {
+                            try{
+                                if (!response.contains("账号不存在")&&!response.contains("查询失败")){
+                                    SysUser sysUser= JSON.parseObject(response, SysUser.class);
+                                    if (sysUser!=null){
+                                        PersonInfo.userName=sysUser.getNickName();
+                                        PersonInfo.localSysUser=sysUser;
+                                    }
+                                }
+
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Object tag, Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onCancel(Object tag, Throwable e) {
+
+                        }
+                    });
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+    }
+
+
+
+
 
 }

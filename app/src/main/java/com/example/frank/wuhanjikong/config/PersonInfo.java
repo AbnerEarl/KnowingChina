@@ -1,5 +1,7 @@
 package com.example.frank.wuhanjikong.config;
 
+import com.example.frank.wuhanjikong.entity.SysUser;
+
 /**
  * PROJECT_NAME:WuHanJiKong
  * PACKAGE_NAME:com.example.frank.wuhanjikong.config
@@ -11,4 +13,5 @@ package com.example.frank.wuhanjikong.config;
  **/
 public class PersonInfo {
     public static String userName="";
+    public static SysUser localSysUser=null;
 }

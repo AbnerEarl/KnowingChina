@@ -26,6 +26,14 @@
     <dimen name="margin_left">46dp</dimen>
     <dimen name="margin_larger">50dp</dimen>
 
+
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+    <dimen name="title_size">18sp</dimen>
+    <dimen name="normal_text_size">16sp</dimen>
+    <dimen name="vertical_padding">10dp</dimen>
+    <dimen name="horizontal_padding">10dp</dimen>
+
     <!-- 通用 -->
     <dimen name="text_size_24">24.0sp</dimen>
     <dimen name="text_size_23">23.0sp</dimen>

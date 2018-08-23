@@ -98,9 +98,9 @@
 
         android:background="#ffffff"
         android:text="Log in"
-        android:textStyle="bold"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -111,5 +111,18 @@
         android:layout_alignEnd="@+id/iv"
         android:background="#ffffff"
         app:srcCompat="@drawable/add_camera" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btn_login"
+        android:layout_alignLeft="@+id/btn_login"
+        android:layout_alignRight="@+id/btn_login"
+        android:layout_alignStart="@+id/btn_login"
+        android:layout_below="@+id/btn_login"
+        android:layout_marginTop="29dp"
+        android:background="#ffffff"
+        android:text="Register" />
 
 </RelativeLayout>

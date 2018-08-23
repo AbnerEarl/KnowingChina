@@ -2,25 +2,44 @@ apply plugin: 'com.android.application'
 def AAVersion = "4.3.1"
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword 'wdsjnsjydjy'
+            storeFile file('G:/AndroidAppKeys/KnowingChina.jks')
+            storePassword 'wdsjnsjydjy'
+        }
+    }
     compileSdkVersion 27
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/rxjava.properties'
     }
+    aaptOptions {
+        cruncherEnabled = false
+    }
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.frank.wuhanjikong"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    productFlavors {
     }
 }
 
@@ -41,7 +60,6 @@ dependencies {
     implementation files('libs/commons-net-3.3.jar')
     implementation files('libs/httpclient-4.2.5.jar')
     implementation files('libs/httpcore-4.2.4.jar')
-
     //网络请求框架 novate/rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
@@ -51,7 +69,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-
     //注解 及 控件绑定
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
@@ -59,10 +76,20 @@ dependencies {
     //androidannotations
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
-
     //图片加载处理
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'me.iwf.photopicker:PhotoPicker:0.9.5@aar'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:gridlayout-v7:27.1.1'
+    implementation files('libs/mail.jar')
+    implementation files('libs/activation.jar')
+    implementation files('libs/additionnal.jar')
+    implementation files('libs/commons-email-1.2.jar')
+    implementation files('libs/SMSSDK-2.0.2.jar')
+    implementation files('libs/fastjson-1.2.2.jar')
+    implementation files('libs/pgyer_sdk_3.0.0.jar')
+    implementation 'com.android.support:multidex:1.0.1'
+    compile 'com.amap.api:3dmap:latest.integration'
+    compile 'com.amap.api:search:latest.integration'
+    compile 'com.amap.api:location:latest.integration'
 }

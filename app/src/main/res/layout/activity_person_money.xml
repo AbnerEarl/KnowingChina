@@ -43,23 +43,26 @@
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
         android:text="Balance"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="63dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView10"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
         android:text="Coins"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="145dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
         android:text="Coupons"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="227dp" />
+        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
 </android.support.constraint.ConstraintLayout>
