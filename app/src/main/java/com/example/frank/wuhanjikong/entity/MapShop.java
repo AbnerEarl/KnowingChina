@@ -1,7 +1,6 @@
 package com.example.frank.wuhanjikong.entity;
 
 
-
 import java.util.Date;
 
 
@@ -10,6 +9,7 @@ public class MapShop {
     private String mapName;
     private int mapStyle;
     private String shopName;
+    private String shopAddress;
     private double shopLongitude;
     private double shopLatitude;
     private String recommandId;
@@ -149,5 +149,13 @@ public class MapShop {
 
     public void setRemarkInfo(String remarkInfo) {
         this.remarkInfo = remarkInfo;
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
     }
 }

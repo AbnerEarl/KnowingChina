@@ -400,16 +400,18 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.setFlat(true);
         markerOptions.anchor(0.5f, 0.5f);
-        markerOptions.position(new LatLng(0, 0));
-        markerOptions
-                .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
+        markerOptions.position(new LatLng(30.445417, 14.274518));
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(getResources(),
                                 R.drawable.icon_loaction_start)));
         mPositionMark = mAmap.addMarker(markerOptions);
-
-        mPositionMark.setPositionByPixels(mMapView.getWidth() / 2,
-                mMapView.getHeight() / 2);
+        mPositionMark.setPositionByPixels(mMapView.getWidth() / 2, mMapView.getHeight() / 2);
         mLocationTask.startSingleLocate();
+
+        LatLng marker1 = new LatLng(30.445417, 14.274518);
+        //设置中心点和缩放比例
+        mAmap.moveCamera(CameraUpdateFactory.changeLatLng(marker1));
+        mAmap.moveCamera(CameraUpdateFactory.zoomTo(200));
     }
 
     @Override
@@ -421,6 +423,10 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                 break;
             case R.id.location_image:
                 mLocationTask.startSingleLocate();
+                LatLng marker1 = new LatLng(30.445417, 14.274518);
+                //设置中心点和缩放比例
+                mAmap.moveCamera(CameraUpdateFactory.changeLatLng(marker1));
+                mAmap.moveCamera(CameraUpdateFactory.zoomTo(200));
                 break;
             case R.id.destination_text:
                 Intent destinationIntent = new Intent(this, DestinationActivity.class);
@@ -523,11 +529,18 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                         View view= LayoutInflater.from(MapMainActivity.this).inflate(R.layout.shop_detail,null);
                                         TextView mapName=(TextView)view.findViewById(R.id.textView24);
                                         TextView shopName=(TextView)view.findViewById(R.id.textView26);
+                                        TextView shopAddress=(TextView)view.findViewById(R.id.textView34);
                                         TextView shopStar=(TextView)view.findViewById(R.id.textView27);
                                         final TextView discussInfo=(TextView)view.findViewById(R.id.textView28);
                                         Button joinDiscuss=(Button)view.findViewById(R.id.button38);
                                         mapName.setText(mapShop.getMapName());
-                                        shopName.setText(mapShop.getShopName());
+                                        shopName.setText("店铺名称："+mapShop.getShopName());
+                                        if (mapShop.getShopAddress()!=null){
+                                            shopAddress.setText("店铺地址："+mapShop.getShopAddress());
+                                        }else {
+                                            shopAddress.setText("店铺地址："+"暂无收录地址");
+                                        }
+
                                         shopStar.setText("综合评分："+mapShop.getShopStar());
                                         if (mapShop.getDiscussInfo()!=null){
                                             discussInfo.setText(mapShop.getDiscussInfo());
@@ -621,26 +634,41 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                         }
                                     });
 
-                                    final EditText editText=new EditText(MapMainActivity.this);
-                                    editText.setHint("请输入推荐理由……");
+                                    final LinearLayout linearLayout_recommand=new LinearLayout(MapMainActivity.this);
+                                    linearLayout_recommand.setOrientation(LinearLayout.VERTICAL);
+                                     final EditText editText_reason=new EditText(MapMainActivity.this);
+                                    editText_reason.setHint("请输入推荐理由……");
+                                     final EditText editText_shop_name=new EditText(MapMainActivity.this);
+                                    editText_shop_name.setHint("请输入商铺名称……");
+                                    linearLayout_recommand.addView(editText_shop_name);
+                                    linearLayout_recommand.addView(editText_reason);
                                     recommend.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
 
-                                            new AlertDialog.Builder(MapMainActivity.this).setView(editText).setTitle("我要推荐").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            new AlertDialog.Builder(MapMainActivity.this).setView(linearLayout_recommand).setTitle("我要推荐").setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
 
-                                                    Map<String, Object> map = new HashMap<>();
-                                                    map.put("mapName",selectedName);
-                                                    map.put("mapStyle",selectedStyle);
-                                                    map.put("longtitu",positionEntitySelected.longitude);
-                                                    map.put("latitu",positionEntitySelected.latitue);
-                                                    map.put("reason",editText.getText().toString());
-                                                    map.put("recommandId", PersonInfo.localSysUser.getUserId());
-                                                    map.put("shopName",positionEntitySelected.address);
-                                                    dialogLoading.show();
-                                                    addRecommandShop(JSON.toJSONString(map));
+                                                    if (editText_reason.getText()==null||editText_reason.getText().toString().trim().equals("")){
+                                                        Toast.makeText(MapMainActivity.this,"请输入推荐理由",Toast.LENGTH_SHORT).show();
+                                                        return;
+                                                    }else if (editText_shop_name.getText()==null||editText_shop_name.getText().toString().trim().equals("")){
+                                                        Toast.makeText(MapMainActivity.this,"请输入商铺名称",Toast.LENGTH_SHORT).show();
+                                                        return;
+                                                    }else {
+                                                        Map<String, Object> map = new HashMap<>();
+                                                        map.put("mapName", selectedName);
+                                                        map.put("mapStyle", selectedStyle);
+                                                        map.put("longtitu", positionEntitySelected.longitude);
+                                                        map.put("latitu", positionEntitySelected.latitue);
+                                                        map.put("reason", editText_reason.getText().toString());
+                                                        map.put("recommandId", PersonInfo.localSysUser.getUserId());
+                                                        map.put("shopName", editText_shop_name.getText().toString());
+                                                        map.put("shopAddress", positionEntitySelected.address);
+                                                        dialogLoading.show();
+                                                        addRecommandShop(JSON.toJSONString(map));
+                                                    }
 
                                                 }
                                             }).setNegativeButton("取消",null).show();

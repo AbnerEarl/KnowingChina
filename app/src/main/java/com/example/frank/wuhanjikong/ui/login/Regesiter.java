@@ -1,6 +1,7 @@
 package com.example.frank.wuhanjikong.ui.login;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.example.frank.wuhanjikong.log.L;
 import com.example.frank.wuhanjikong.service.ApiService;
 import com.example.frank.wuhanjikong.ui.home.ApplicationLoad;
 import com.example.frank.wuhanjikong.ui.home.HomeActivity;
+import com.example.frank.wuhanjikong.ui.map.SearchActivity;
 import com.tamic.novate.Throwable;
 import com.tamic.novate.callback.RxStringCallback;
 
@@ -50,6 +52,7 @@ public class Regesiter extends AppCompatActivity {
     static int flag=0;
     TextView shuoming;
     ProgressBar zhucejiazai;
+    private ProgressDialog dialogLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +75,16 @@ public class Regesiter extends AppCompatActivity {
         yanzheng=(EditText)findViewById(R.id.editText10r);
         shuoming=(TextView)findViewById(R.id.textView8r);
         zhucejiazai=(ProgressBar)this.findViewById(R.id.progressBar2);
-
+        dialogLoading = new ProgressDialog(Regesiter.this);
+        dialogLoading.setTitle("提示信息");
+        dialogLoading.setMessage("正在处理，请稍候...");
 
         final AlertDialog.Builder alertDialog  =new AlertDialog.Builder(this);
         getyanzhengma.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                dialogLoading.show();
                 if (youxiang.getText().toString().trim()!=null&&youxiang.getText().toString().trim().length()>4) {
                     rnumber = (int) (Math.random() * 100000);
                     //yzm=String.valueOf(rnumber) ;
@@ -91,6 +98,7 @@ public class Regesiter extends AppCompatActivity {
                         flag=0;
                         e.printStackTrace();
                     }
+                    dialogLoading.dismiss();
                     if (flag==1) {
                         alertDialog.setTitle("系统提示").setMessage("验证码获取成功，请注册邮箱查看！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
@@ -121,7 +129,7 @@ public class Regesiter extends AppCompatActivity {
                         }
                     }).show();
                 }
-
+                dialogLoading.dismiss();
 
             }
         });
@@ -130,7 +138,7 @@ public class Regesiter extends AppCompatActivity {
         chakanyouxiang.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Regesiter.this, ApplicationLoad.class);
+                Intent intent = new Intent(Regesiter.this, SearchActivity.class);
                 intent.putExtra("url", "http://www.benpig.com/mail.htm");
                 startActivity(intent);
 
@@ -210,6 +218,63 @@ public class Regesiter extends AppCompatActivity {
 
     }
 
+
+    private void getQrCode(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final AlertDialog.Builder alertDialog  =new AlertDialog.Builder(Regesiter.this);
+                dialogLoading.show();
+                if (youxiang.getText().toString().trim()!=null&&youxiang.getText().toString().trim().length()>4) {
+                    rnumber = (int) (Math.random() * 100000);
+                    //yzm=String.valueOf(rnumber) ;
+                    yzm = Integer.toString(rnumber);
+                    String content="您本次注册的验证码为： " + yzm + " 。十分钟内有效，请十分钟内在注册界面输入此验证码！ 如您没有进行注册操作，无需理会此邮件!";
+
+                    try {
+                        sendEmail(youxiang.getText().toString().trim(),"“KnowingChina”帐号注册邮件!", content);
+                        flag=1;
+                    } catch (Exception e) {
+                        flag=0;
+                        e.printStackTrace();
+                    }
+                    dialogLoading.dismiss();
+                    if (flag==1) {
+                        alertDialog.setTitle("系统提示").setMessage("验证码获取成功，请注册邮箱查看！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                flag=0;
+
+                            }
+                        }).show();
+                    } else {
+                        alertDialog.setTitle("系统提示").setMessage("验证码获取失败，请检查网络并重新获取！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                            }
+                        }).show();
+                    }
+                }else {
+                    alertDialog.setTitle("系统提示").setMessage("请输入完整的且合法的邮箱！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+
+                        }
+                    }).show();
+                }
+                dialogLoading.dismiss();
+            }
+        }).start();
+
+    }
 
 
     /**

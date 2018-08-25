@@ -4,14 +4,13 @@ package com.example.frank.wuhanjikong.entity;
 
 import java.util.Date;
 
-
 public class ContentInfo {
-
     private String contentId;
     private String contentTitle;
     private int contentStyle;
     private String contentText;
     private String fileUrl;
+    private String vedioUrl;
     private int contentPlate;
     private String publisherId;
     private Date publishTime;
@@ -160,5 +159,13 @@ public class ContentInfo {
 
     public void setThumbPeoples(String thumbPeoples) {
         this.thumbPeoples = thumbPeoples;
+    }
+
+    public String getVedioUrl() {
+        return vedioUrl;
+    }
+
+    public void setVedioUrl(String vedioUrl) {
+        this.vedioUrl = vedioUrl;
     }
 }

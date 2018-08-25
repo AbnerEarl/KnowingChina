@@ -9,18 +9,24 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -28,8 +34,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -69,7 +77,12 @@ public class HomeFragment extends Fragment {
     private ListView lv_info;
     private TextView textViewCation,textViewRecommand,textViewNear,textViewClass;
     private ProgressDialog dialog;
-
+    private  int startIndex=0,contengPlate=1;
+    private  int numberShow=5;
+    private  int firstVisibleItemTag=0;
+    private static boolean requestFlag=false;
+    private int totalItemFlag=0;
+    private int maxWidth=200;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -87,7 +100,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_home, container, false);
-
+        DisplayMetrics dm2 = getResources().getDisplayMetrics();
+        maxWidth=dm2.widthPixels-8;
         init(view);
 
         lv_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,7 +125,8 @@ public class HomeFragment extends Fragment {
                // myAdapter.listItem.clear();
                 /*myAdapter.listItem=PublicInfo.listItemCation;
                 myAdapter.notifyDataSetChanged();*/
-                getMessageInfo(1);
+                contengPlate=1;
+                getMessageInfo(1,startIndex,numberShow,true);
             }
         });
 
@@ -121,7 +136,8 @@ public class HomeFragment extends Fragment {
                 //myAdapter.listItem.clear();
                 /*myAdapter.listItem=PublicInfo.listItemRecommand;
                 myAdapter.notifyDataSetChanged();*/
-                getMessageInfo(2);
+                contengPlate=2;
+                getMessageInfo(2,startIndex,numberShow,true);
             }
         });
 
@@ -131,7 +147,8 @@ public class HomeFragment extends Fragment {
                 //myAdapter.listItem.clear();
                 /*myAdapter.listItem=PublicInfo.listItemNear;
                 myAdapter.notifyDataSetChanged();*/
-                getMessageInfo(3);
+                contengPlate=3;
+                getMessageInfo(3,startIndex,numberShow,true);
             }
         });
 
@@ -141,7 +158,8 @@ public class HomeFragment extends Fragment {
                 //myAdapter.listItem.clear();
                 /*myAdapter.listItem=PublicInfo.listItemClass;
                 myAdapter.notifyDataSetChanged();*/
-                getMessageInfo(4);
+                contengPlate=4;
+                getMessageInfo(4,startIndex,numberShow,true);
             }
         });
 
@@ -176,7 +194,7 @@ public class HomeFragment extends Fragment {
             PublicInfo.listItemCation.add(map);
         }*/
 
-        getMessageInfo(1);
+        getMessageInfo(contengPlate,startIndex,numberShow,true);
 
         /*for (int i=0;i<10;i++){
             HashMap<String,Object> map=new HashMap<>();
@@ -215,6 +233,47 @@ public class HomeFragment extends Fragment {
         /*myAdapter.listItem= PublicInfo.listItemCation;
         myAdapter.notifyDataSetChanged();*/
 
+
+        lv_info.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                switch (scrollState) {
+                    case SCROLL_STATE_IDLE://停止滑动
+                        break;
+                    case SCROLL_STATE_TOUCH_SCROLL://正在滑动
+                        break;
+                    case SCROLL_STATE_FLING://滑动ListView离开后，由于惯性继续滑动
+
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //用于底部加载更多数据的判断逻辑,在这个地方调用自己的方法请求网络数据，一次性请求10条或者15条等
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount > 0&&totalItemCount>totalItemFlag) {
+                    totalItemFlag=totalItemCount;
+                    if (requestFlag){
+                        requestFlag=false;
+                        getMessageInfo(contengPlate,startIndex,numberShow,false);
+                    }
+
+                }
+
+                //判断ListView的滑动方向
+                if (firstVisibleItemTag == firstVisibleItem) {
+                    Log.e("滑动分页：", "未发生滑动");
+                } else if (firstVisibleItemTag > firstVisibleItem) {
+                    Log.e("滑动分页：", "发生下滑");
+                } else {
+                    Log.e("滑动分页：", "发生上滑");
+                }
+                firstVisibleItemTag = firstVisibleItem;
+
+
+            }
+        });
 
 
 
@@ -274,6 +333,7 @@ public class HomeFragment extends Fragment {
                 holder.img_zan=(ImageView) convertView.findViewById(R.id.imageView5);
                 holder.img_discuss=(ImageView) convertView.findViewById(R.id.imageView6);
                 holder.img_collect=(ImageView) convertView.findViewById(R.id.imageView16);
+                holder.videoView=(VideoView)convertView.findViewById(R.id.videoView);
 
 
                 convertView.setTag(holder);//绑定ViewHolder对象
@@ -313,8 +373,71 @@ public class HomeFragment extends Fragment {
                 }else {
                     holder.imageView.setImageResource(R.drawable.vediotem);
                 }*/
-                Glide.with(getContext()).load(listItem.get(position).get("url").toString()).into(holder.imageView);
-                L.g("imgurl======",listItem.get(position).get("url").toString());
+
+                if (listItem.get(position).get("contentType").toString().equals("3")){
+                    //final String url=listItem.get(position).get("url").toString();
+                    holder.videoView.setVisibility(View.INVISIBLE);
+                    holder.imageView.setVisibility(View.VISIBLE);
+                    Glide.with(getContext()).load(listItem.get(position).get("url").toString()).into(holder.imageView);
+                    //holder.videoView.setVisibility(View.INVISIBLE);
+                    //holder.imageView.setVisibility(View.VISIBLE);
+                    //holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(maxWidth,180));
+                    //   holder.videoView.setVideoPath(url);
+                    //    holder.videoView.requestFocus();
+                    //   holder.videoView.start();
+                    //holder.imageView.setImageBitmap(createVideoThumbnail(url,400,400));;
+
+
+                    //下面几行可以实现效果，其他的代码是测试用的
+                    //holder.videoView.setFocusable(true);
+                    //holder.videoView.setVideoPath(url);
+                   // holder.videoView.seekTo(1);
+                  //  holder.videoView.requestFocus();
+
+
+
+
+                    /*holder.videoView.setVisibility(View.INVISIBLE);
+                    holder.imageView.setVisibility(View.VISIBLE);
+
+                            MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                            Bitmap bitmap = null;
+                            try {
+                                //这里要用FileProvider获取的Uri
+                                if (url.contains("http")) {
+                                    retriever.setDataSource(url, new HashMap<String, String>());
+                                } else {
+                                    retriever.setDataSource(url);
+                                }
+                                bitmap = retriever.getFrameAtTime();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            } finally {
+                                try {
+                                    retriever.release();
+                                } catch (RuntimeException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                            //showImageMessage(bitmap, positionTag, vv);
+                            holder.imageView.setImageBitmap(bitmap);*/
+
+
+
+                }else if (listItem.get(position).get("contentType").toString().equals("2")){
+                    holder.videoView.setVisibility(View.INVISIBLE);
+                    holder.imageView.setVisibility(View.VISIBLE);
+                   // holder.videoView.setFocusable(false);
+                  //  holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(maxWidth,180));
+                    Glide.with(getContext()).load(listItem.get(position).get("url").toString()).into(holder.imageView);
+                    L.g("imgurl======",listItem.get(position).get("url").toString());
+                }else {
+                    //holder.videoView.setLayoutParams(new RelativeLayout.LayoutParams(0,0));
+                   // holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(0,0));
+                    holder.videoView.setVisibility(View.INVISIBLE);
+                    holder.imageView.setVisibility(View.INVISIBLE);
+                }
+
 
 
             }catch (Exception e){
@@ -327,12 +450,49 @@ public class HomeFragment extends Fragment {
                     Toast.makeText (getContext(),"正在加载！", Toast.LENGTH_LONG ).show ();
                     Intent intent=new Intent(getActivity(), ApplicationLoad.class);
                     intent.putExtra("url",myAdapter.listItem.get(position).get("url").toString());
+                    if (myAdapter.listItem.get(position).get("vedioUrl")!=null){
+                        intent.putExtra("vedioUrl",myAdapter.listItem.get(position).get("vedioUrl").toString());
+                    }else {
+                        intent.putExtra("vedioUrl",myAdapter.listItem.get(position).get("url").toString());
+                    }
+
+                    intent.putExtra("contentType",listItem.get(position).get("contentType").toString());
                     intent.putExtra("contentId",listItem.get(position).get("contentId").toString());
                     intent.putExtra("title",myAdapter.listItem.get(position).get("contentTitle").toString());
                     intent.putExtra("content",myAdapter.listItem.get(position).get("contentInfo").toString());
                     startActivity(intent);
                 }
             });
+
+            /*holder.videoView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText (getContext(),"正在加载！", Toast.LENGTH_LONG ).show ();
+                    Intent intent=new Intent(getActivity(), ApplicationLoad.class);
+                    intent.putExtra("url",myAdapter.listItem.get(position).get("url").toString());
+                    intent.putExtra("contentType",listItem.get(position).get("contentType").toString());
+                    intent.putExtra("contentId",listItem.get(position).get("contentId").toString());
+                    intent.putExtra("title",myAdapter.listItem.get(position).get("contentTitle").toString());
+                    intent.putExtra("content",myAdapter.listItem.get(position).get("contentInfo").toString());
+                    startActivity(intent);
+                }
+            });*/
+
+            /*holder.videoView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    Toast.makeText (getContext(),"正在加载！", Toast.LENGTH_LONG ).show ();
+                    Intent intent=new Intent(getActivity(), ApplicationLoad.class);
+                    intent.putExtra("url",myAdapter.listItem.get(position).get("url").toString());
+                    intent.putExtra("contentType",listItem.get(position).get("contentType").toString());
+                    intent.putExtra("contentId",listItem.get(position).get("contentId").toString());
+                    intent.putExtra("title",myAdapter.listItem.get(position).get("contentTitle").toString());
+                    intent.putExtra("content",myAdapter.listItem.get(position).get("contentInfo").toString());
+                    startActivity(intent);
+                    return false;
+                }
+            });*/
 
             holder.img_share.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -461,13 +621,14 @@ public class HomeFragment extends Fragment {
     public final class ViewHolder {
         public TextView publishTime,nickName,contentTitle,contentInfo,discussInfo,dianZan;
         public ImageView imageView,img_share,img_zan,img_discuss,img_collect;
+        public VideoView videoView;
 
 
     }
 
 
 
-    private void getMessageInfo(final int plate){
+    private void getMessageInfo(final int plate, final int startIndexPos, final int numberShowSum, final boolean isNotSearch){
 
         new Thread(new Runnable() {
             @Override
@@ -476,13 +637,19 @@ public class HomeFragment extends Fragment {
 
                     Map<String, Object> paremetes = new HashMap<>();
                     paremetes.put("data", plate);
+                    paremetes.put("startIndex",startIndexPos);
+                    paremetes.put("number",numberShowSum);
                     ApiService.GetString(getActivity(), "getContentInfoByPlate", paremetes, new RxStringCallback() {
                         @Override
                         public void onNext(Object tag, String response) {
                             try{
+                                if (isNotSearch){
+                                    myAdapter.listItem.clear();
+                                }
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 if (!response.contains("没有数据")&&!response.contains("查询失败")){
-                                    myAdapter.listItem.clear();
+                                    startIndex=startIndex+numberShow;
+                                    requestFlag=true;
                                     List<ContentInfo> contentInfoList = JSON.parseObject(response,new TypeReference< List<ContentInfo>>(){});
                                     for (ContentInfo contentInfo:contentInfoList){
                                         HashMap<String,Object> map=new HashMap<>();
@@ -490,6 +657,8 @@ public class HomeFragment extends Fragment {
                                         map.put("contentTitle",contentInfo.getContentTitle());
                                         map.put("contentInfo",contentInfo.getContentText());
                                         map.put("contentId",contentInfo.getContentId());
+                                        map.put("contentType",contentInfo.getContentStyle());
+                                        map.put("vedioUrl",contentInfo.getVedioUrl());
                                         map.put("tag","1");
                                         map.put("time",sdf.format(contentInfo.getPublishTime()));
                                         map.put("discussInfo",contentInfo.getDiscussInfo());
@@ -753,5 +922,32 @@ public class HomeFragment extends Fragment {
 
 
 
+    private Bitmap createVideoThumbnail(String url, int width, int height) {
+        Bitmap bitmap = null;
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        int kind = MediaStore.Video.Thumbnails.MINI_KIND;
+        try {
+            if (Build.VERSION.SDK_INT >= 14) {
+                retriever.setDataSource(url, new HashMap<String, String>());
+            } else {
+                retriever.setDataSource(url);
+            }
+            bitmap = retriever.getFrameAtTime();
+        } catch (IllegalArgumentException ex) {
+            // Assume this is a corrupt video file
+        } catch (RuntimeException ex) {
+            // Assume this is a corrupt video file.
+        } finally {
+            try {
+                retriever.release();
+            } catch (RuntimeException ex) {
+                // Ignore failures while cleaning up.
+            }
+        }
+        if (kind == MediaStore.Images.Thumbnails.MICRO_KIND && bitmap != null) {
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+        }
+        return bitmap;
+    }
 
 }

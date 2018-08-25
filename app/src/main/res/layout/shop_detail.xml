@@ -39,7 +39,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView26"
+        android:layout_below="@+id/textView34"
         android:layout_marginTop="16dp"
         android:text="TextView" />
 
@@ -74,4 +74,16 @@
         android:layout_below="@+id/textView27"
         android:layout_marginTop="16dp"
         android:text="评论信息：" />
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView26"
+        android:layout_marginTop="16dp"
+        android:text="TextView" />
 </RelativeLayout>

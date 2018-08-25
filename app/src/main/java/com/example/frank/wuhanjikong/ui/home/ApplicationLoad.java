@@ -30,16 +30,19 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.bumptech.glide.Glide;
 import com.example.frank.wuhanjikong.R;
 import com.example.frank.wuhanjikong.entity.ContentInfo;
 import com.example.frank.wuhanjikong.entity.HskContent;
 import com.example.frank.wuhanjikong.fragment.HomeFragment;
+import com.example.frank.wuhanjikong.log.L;
 import com.example.frank.wuhanjikong.service.ApiService;
 import com.tamic.novate.Throwable;
 import com.tamic.novate.callback.RxStringCallback;
@@ -64,9 +67,10 @@ public class ApplicationLoad extends AppCompatActivity {
 
     private ImageButton back;
     private TextView title;
-    private String titleInfo,contentInfo,contentId;
+    private String titleInfo,contentInfo,contentId,contentType,vedioUrl;
     private TextView textViewTitle,textViewContent;
     private Button hsk;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,9 @@ public class ApplicationLoad extends AppCompatActivity {
         urrl= intent.getStringExtra("url");
         titleInfo=intent.getStringExtra("title");
         contentInfo=intent.getStringExtra("content");
+        contentType=intent.getStringExtra("contentType");
         contentId=intent.getStringExtra("contentId");
+        vedioUrl=intent.getStringExtra("vedioUrl");
 
 
 
@@ -86,6 +92,7 @@ public class ApplicationLoad extends AppCompatActivity {
         hsk=(Button)this.findViewById(R.id.button28);
         back=(ImageButton)this.findViewById(R.id.titleback);
         title=(TextView)this.findViewById(R.id.titleplain);
+        imageView=(ImageView)this.findViewById(R.id.imageView18);
         //标题栏设置
         title.setText("Knowing China");
         back.setOnClickListener(new View.OnClickListener() {
@@ -94,14 +101,10 @@ public class ApplicationLoad extends AppCompatActivity {
                 finish();
             }
         });
-
         textViewTitle.setText(titleInfo);
         textViewContent.setText(contentInfo);
-
-
         String str = urrl;//http://www.google.cn/maps/@37.263579,74.9775024,4z?hl=en
         Context context=ApplicationLoad.this;
-
         hsk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -333,34 +336,21 @@ public class ApplicationLoad extends AppCompatActivity {
         String appCaceDir =this.getApplicationContext().getDir("cache", Context.MODE_PRIVATE).getPath();
         settings.setAppCachePath(appCaceDir);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        myWebView.loadUrl(str);
 
+        if (contentType.contains("3")){
+            myWebView.setVisibility(View.VISIBLE);
+            imageView.setVisibility(View.INVISIBLE);
+            myWebView.loadUrl(vedioUrl);
+            L.g("webview加载了视频",vedioUrl);
+        }else if (contentType.contains("2")) {
+            myWebView.setVisibility(View.INVISIBLE);
+            imageView.setVisibility(View.VISIBLE);
+            Glide.with(ApplicationLoad.this).load(urrl).into(imageView);
 
-        //监听下载
-        myWebView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                // System.out.println(url: + url);
-                if (url.endsWith(".zip")){
-                    // 如果传进来url包含.zip文件，那么就开启下载线程
-                    // System.out.println(download start...);
-                    new DownloadThread(url).start();
-                }
-            }
-        });
-        myWebView.setOnKeyListener(new View.OnKeyListener(){
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event){
-                if(event.getAction()== KeyEvent.ACTION_DOWN){
-                    if(keyCode== KeyEvent.KEYCODE_BACK&&myWebView.canGoBack()){
-                        myWebView.goBack();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
+        }else {
+            myWebView.setVisibility(View.INVISIBLE);
+            imageView.setVisibility(View.INVISIBLE);
+        }
 
 
 
@@ -591,86 +581,6 @@ public class ApplicationLoad extends AppCompatActivity {
         // TODO Auto-generated method stub  
         super.onDestroy();
     }
-
-    // 网络状态判断  
-    public boolean isNetworkConnected(Context context){
-        if(context!=null){
-            ConnectivityManager mConnectivityManager=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo=mConnectivityManager.getActiveNetworkInfo();
-            if(mNetworkInfo!=null){
-                return mNetworkInfo.isAvailable();
-            }
-        }
-        return false;
-
-    }
-
-
-
-    /**
-          * 执行下载的线程
-          */
-    class DownloadThread extends Thread {
-        private String mUrl;
-
-        public DownloadThread(String url) {
-            this.mUrl = url;
-        }
-
-        @Override
-        public void run() {
-            try {
-                URL httpUrl = new URL(mUrl);
-                HttpURLConnection conn = (HttpURLConnection) httpUrl.openConnection();
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setConnectTimeout(5000);
-                conn.setReadTimeout(5000);
-
-                InputStream in = conn.getInputStream();
-                FileOutputStream out = null;
-                // 获取下载路径
-                File downloadFile;
-                File sdFile;
-                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    downloadFile = Environment.getExternalStorageDirectory();
-                    sdFile = new File(downloadFile,".zip");
-                    out = new FileOutputStream(sdFile);
-                }
-                byte[] b = new byte[8 * 1024];
-                int len;
-                while ((len = in.read(b)) != -1) {
-                    if (out != null) {
-                        out.write(b, 0, len);
-                    }
-                }
-                if (out != null) {
-                    out.close();
-                }
-                if (in != null) {
-                    in.close();
-                }
-                // System.out.println(download success...);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-
-//cook同步
-    /*public static void synCookies(Context context,String url){
-        CookieSyncManager.createInstance(context);
-        CookieManager cookieManager=CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.removeSessionCookie();//移除  
-        cookieManager.setCookie(url,cookies);//cookies是在HttpClient中获得的cookie  
-        CookieSyncManager.getInstance().sync();
-    }*/
-
 
 
     /**

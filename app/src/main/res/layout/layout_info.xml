@@ -120,4 +120,11 @@
         android:layout_marginLeft="16dp"
         android:maxLines="5"
         android:text=" " />
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@+id/textView22"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
