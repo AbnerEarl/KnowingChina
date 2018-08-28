@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -77,12 +78,16 @@ public class HomeFragment extends Fragment {
     private ListView lv_info;
     private TextView textViewCation,textViewRecommand,textViewNear,textViewClass;
     private ProgressDialog dialog;
-    private  int startIndex=0,contengPlate=1;
+    private  int startIndex=0,contengPlate=2;
     private  int numberShow=5;
     private  int firstVisibleItemTag=0;
     private static boolean requestFlag=false;
     private int totalItemFlag=0;
     private int maxWidth=200;
+    public static Handler handler;
+    public static Runnable runnable;
+    public static String KEYWORDS="";
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -101,8 +106,17 @@ public class HomeFragment extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_home, container, false);
         DisplayMetrics dm2 = getResources().getDisplayMetrics();
-        maxWidth=dm2.widthPixels-8;
+        maxWidth=dm2.widthPixels;
         init(view);
+
+        handler=new Handler();
+        runnable=new Runnable() {
+            @Override
+            public void run() {
+                getMessageInfoByKeyWord(KEYWORDS);
+            }
+        };
+
 
         lv_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -126,6 +140,7 @@ public class HomeFragment extends Fragment {
                 /*myAdapter.listItem=PublicInfo.listItemCation;
                 myAdapter.notifyDataSetChanged();*/
                 contengPlate=1;
+                startIndex=0;
                 getMessageInfo(1,startIndex,numberShow,true);
             }
         });
@@ -137,6 +152,7 @@ public class HomeFragment extends Fragment {
                 /*myAdapter.listItem=PublicInfo.listItemRecommand;
                 myAdapter.notifyDataSetChanged();*/
                 contengPlate=2;
+                startIndex=0;
                 getMessageInfo(2,startIndex,numberShow,true);
             }
         });
@@ -148,6 +164,7 @@ public class HomeFragment extends Fragment {
                 /*myAdapter.listItem=PublicInfo.listItemNear;
                 myAdapter.notifyDataSetChanged();*/
                 contengPlate=3;
+                startIndex=0;
                 getMessageInfo(3,startIndex,numberShow,true);
             }
         });
@@ -159,6 +176,7 @@ public class HomeFragment extends Fragment {
                 /*myAdapter.listItem=PublicInfo.listItemClass;
                 myAdapter.notifyDataSetChanged();*/
                 contengPlate=4;
+                startIndex=0;
                 getMessageInfo(4,startIndex,numberShow,true);
             }
         });
@@ -178,8 +196,8 @@ public class HomeFragment extends Fragment {
         textViewClass=(TextView)view.findViewById(R.id.textView15);
 
         dialog = new ProgressDialog(getContext());
-        dialog.setTitle("提示信息");
-        dialog.setMessage("正在处理，请稍候...");
+        dialog.setTitle("hint");
+        dialog.setMessage("loading...");
 
 
         /*for (int i=0;i<10;i++){
@@ -378,6 +396,12 @@ public class HomeFragment extends Fragment {
                     //final String url=listItem.get(position).get("url").toString();
                     holder.videoView.setVisibility(View.INVISIBLE);
                     holder.imageView.setVisibility(View.VISIBLE);
+                    int width=holder.imageView.getMaxWidth();
+                    holder.imageView.setAdjustViewBounds(true);
+                    holder.imageView.setMaxHeight(600);
+                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(width,600);
+                    param.addRule(RelativeLayout.BELOW,R.id.textView22);
+                    holder.imageView.setLayoutParams(param);
                     Glide.with(getContext()).load(listItem.get(position).get("url").toString()).into(holder.imageView);
                     //holder.videoView.setVisibility(View.INVISIBLE);
                     //holder.imageView.setVisibility(View.VISIBLE);
@@ -428,12 +452,31 @@ public class HomeFragment extends Fragment {
                     holder.videoView.setVisibility(View.INVISIBLE);
                     holder.imageView.setVisibility(View.VISIBLE);
                    // holder.videoView.setFocusable(false);
-                  //  holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(maxWidth,180));
+                    int width=holder.imageView.getMaxWidth();
+
+                    holder.imageView.setAdjustViewBounds(true);
+                    holder.imageView.setMaxHeight(600);
+                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(width,600);
+                    param.addRule(RelativeLayout.BELOW,R.id.textView22);
+                    holder.imageView.setLayoutParams(param);
                     Glide.with(getContext()).load(listItem.get(position).get("url").toString()).into(holder.imageView);
-                    L.g("imgurl======",listItem.get(position).get("url").toString());
+                    //L.g("imgurl======",listItem.get(position).get("url").toString());
                 }else {
-                    //holder.videoView.setLayoutParams(new RelativeLayout.LayoutParams(0,0));
-                   // holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(0,0));
+                   // holder.videoView.setLayoutParams(new RelativeLayout.LayoutParams(2,2));
+                  //  holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(2,2));
+                    holder.imageView.setAdjustViewBounds(true);
+                    holder.imageView.setMaxHeight(1);
+                    int width=holder.imageView.getMaxWidth();
+                    RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(width,1);
+                    //添加规则，示例 靠父控件最右边
+                   // param.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    //如果相对某个控件
+                    param.addRule(RelativeLayout.BELOW,R.id.textView22);
+                    //添加控件
+                   // addView(imageview,param);
+                    //holder.imageView.setLayoutParams(new RelativeLayout.LayoutParams(width,1));
+                    holder.imageView.setLayoutParams(param);
+                    L.g("设置了最大高度为1.");
                     holder.videoView.setVisibility(View.INVISIBLE);
                     holder.imageView.setVisibility(View.INVISIBLE);
                 }
@@ -447,7 +490,7 @@ public class HomeFragment extends Fragment {
             holder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText (getContext(),"正在加载！", Toast.LENGTH_LONG ).show ();
+                    Toast.makeText (getContext(),"loading！", Toast.LENGTH_LONG ).show ();
                     Intent intent=new Intent(getActivity(), ApplicationLoad.class);
                     intent.putExtra("url",myAdapter.listItem.get(position).get("url").toString());
                     if (myAdapter.listItem.get(position).get("vedioUrl")!=null){
@@ -463,6 +506,29 @@ public class HomeFragment extends Fragment {
                     startActivity(intent);
                 }
             });
+
+
+            holder.contentInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText (getContext(),"loading！", Toast.LENGTH_LONG ).show ();
+                    Intent intent=new Intent(getActivity(), ApplicationLoad.class);
+                    if (!listItem.get(position).get("contentType").toString().equals("1")) {
+                        intent.putExtra("url", myAdapter.listItem.get(position).get("url").toString());
+                        if (myAdapter.listItem.get(position).get("vedioUrl") != null) {
+                            intent.putExtra("vedioUrl", myAdapter.listItem.get(position).get("vedioUrl").toString());
+                        } else {
+                            intent.putExtra("vedioUrl", myAdapter.listItem.get(position).get("url").toString());
+                        }
+                    }
+                    intent.putExtra("contentType",listItem.get(position).get("contentType").toString());
+                    intent.putExtra("contentId",listItem.get(position).get("contentId").toString());
+                    intent.putExtra("title",myAdapter.listItem.get(position).get("contentTitle").toString());
+                    intent.putExtra("content",myAdapter.listItem.get(position).get("contentInfo").toString());
+                    startActivity(intent);
+                }
+            });
+
 
             /*holder.videoView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -509,7 +575,7 @@ public class HomeFragment extends Fragment {
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     lp.setMargins(5, 25, 5, 25);
                     TextView share=new TextView(getContext());
-                    share.setText("分享");
+                    share.setText("share");
                     share.setTextSize(18);
                     share.setLayoutParams(lp);
                     share.setGravity(Gravity.CENTER);
@@ -517,7 +583,7 @@ public class HomeFragment extends Fragment {
                     report.setTextSize(18);
                     report.setGravity(Gravity.CENTER);
                     report.setLayoutParams(lp);
-                    report.setText("举报");
+                    report.setText("report");
 
                     linearLayout.addView(share);
                     linearLayout.addView(distinct);
@@ -542,12 +608,12 @@ public class HomeFragment extends Fragment {
                 public void onClick(View v) {
 
                     if (holder.dianZan.getText().toString().contains(PersonInfo.userName)){
-                        Toast.makeText(getContext(),"已经点过赞了！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext()," liked it！",Toast.LENGTH_SHORT).show();
                     }else {
 
                         if (holder.dianZan.getText().toString().trim().equals("")){
                             //holder.dianZan.setText(PersonInfo.userName+"等人觉得赞。");
-                            listItem.get(position).put("zan",PersonInfo.userName+"等人觉得赞。");
+                            listItem.get(position).put("zan",PersonInfo.userName+" like it。");
                         }else {
                             //holder.dianZan.setText(PersonInfo.localSysUser.getNickName()+"、"+holder.dianZan.getText().toString());
                             listItem.get(position).put("zan",PersonInfo.localSysUser.getNickName()+"、"+holder.dianZan.getText().toString());
@@ -572,11 +638,11 @@ public class HomeFragment extends Fragment {
                     final EditText discuss=new EditText(getContext());
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     lp.setMargins(5, 25, 5, 5);
-                    discuss.setHint("请输入您的评论内容……");
+                    discuss.setHint("Please enter your comment……");
                     discuss.setLayoutParams(lp);
                     linearLayout.addView(discuss);
 
-                    new AlertDialog.Builder(getContext()).setView(linearLayout).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(getContext()).setView(linearLayout).setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (discuss.getText()!=null&&!discuss.getText().toString().trim().equals("")){
@@ -592,11 +658,11 @@ public class HomeFragment extends Fragment {
                                 map.put("discussInfo",listItem.get(position).get("discussInfo").toString());
                                 addDiscussInfo(JSON.toJSONString(map));
                             }else {
-                                Toast.makeText(getContext(),"没有输入评论内容",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(),"No comments were entered",Toast.LENGTH_SHORT).show();
                             }
 
                         }
-                    }).setNegativeButton("取消",null).show();
+                    }).setNegativeButton("cancel",null).show();
                 }
             });
 
@@ -647,7 +713,74 @@ public class HomeFragment extends Fragment {
                                     myAdapter.listItem.clear();
                                 }
                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                                if (!response.contains("没有数据")&&!response.contains("查询失败")){
+                                if (!response.contains("no data")&&!response.contains("failed to search")){
+                                    startIndex=startIndex+numberShow;
+                                    requestFlag=true;
+                                    List<ContentInfo> contentInfoList = JSON.parseObject(response,new TypeReference< List<ContentInfo>>(){});
+                                    for (ContentInfo contentInfo:contentInfoList){
+                                        HashMap<String,Object> map=new HashMap<>();
+                                        map.put("nickName",contentInfo.getOtherInfo());
+                                        map.put("contentTitle",contentInfo.getContentTitle());
+                                        map.put("contentInfo",contentInfo.getContentText());
+                                        map.put("contentId",contentInfo.getContentId());
+                                        map.put("contentType",contentInfo.getContentStyle());
+                                        map.put("vedioUrl",contentInfo.getVedioUrl());
+                                        map.put("tag","1");
+                                        map.put("time",sdf.format(contentInfo.getPublishTime()));
+                                        map.put("discussInfo",contentInfo.getDiscussInfo());
+                                        map.put("url",contentInfo.getFileUrl());
+                                        map.put("zan",contentInfo.getThumbPeoples());
+                                        myAdapter.listItem.add(map);
+                                    }
+                                    myAdapter.notifyDataSetChanged();
+                                }
+
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Object tag, Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onCancel(Object tag, Throwable e) {
+
+                        }
+                    });
+
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+    }
+
+    public  void getMessageInfoByKeyWord(final String keyWord){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    Map<String, Object> paremetes = new HashMap<>();
+                    paremetes.put("data", keyWord);
+                    startIndex=0;
+                    ApiService.GetString(getActivity(), "getMessageInfoByKeyWord", paremetes, new RxStringCallback() {
+                        @Override
+                        public void onNext(Object tag, String response) {
+                            try{
+
+                                myAdapter.listItem.clear();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                if (!response.contains("no data")&&!response.contains("failed to search")){
                                     startIndex=startIndex+numberShow;
                                     requestFlag=true;
                                     List<ContentInfo> contentInfoList = JSON.parseObject(response,new TypeReference< List<ContentInfo>>(){});
@@ -699,6 +832,7 @@ public class HomeFragment extends Fragment {
 
 
 
+
     private void addThumbPeople(final String dataInfo){
 
         new Thread(new Runnable() {
@@ -712,7 +846,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onNext(Object tag, String response) {
                                 if (response.contains("true")){
-                                    new AlertDialog.Builder(getContext()).setMessage("点赞成功！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    new AlertDialog.Builder(getContext()).setMessage("success！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
 
@@ -760,7 +894,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onNext(Object tag, String response) {
                            if (response.equals("true")){
-                               new AlertDialog.Builder(getContext()).setMessage("评论成功！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                               new AlertDialog.Builder(getContext()).setMessage("success！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                                    @Override
                                    public void onClick(DialogInterface dialog, int which) {
 
@@ -806,7 +940,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onNext(Object tag, String response) {
 
-                                new AlertDialog.Builder(getContext()).setMessage(response).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                new AlertDialog.Builder(getContext()).setMessage(response).setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 

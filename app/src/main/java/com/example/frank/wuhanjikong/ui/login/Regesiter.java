@@ -76,8 +76,8 @@ public class Regesiter extends AppCompatActivity {
         shuoming=(TextView)findViewById(R.id.textView8r);
         zhucejiazai=(ProgressBar)this.findViewById(R.id.progressBar2);
         dialogLoading = new ProgressDialog(Regesiter.this);
-        dialogLoading.setTitle("提示信息");
-        dialogLoading.setMessage("正在处理，请稍候...");
+        dialogLoading.setTitle("system hint");
+        dialogLoading.setMessage("loading...");
 
         final AlertDialog.Builder alertDialog  =new AlertDialog.Builder(this);
         getyanzhengma.setOnClickListener(new Button.OnClickListener(){
@@ -89,10 +89,10 @@ public class Regesiter extends AppCompatActivity {
                     rnumber = (int) (Math.random() * 100000);
                     //yzm=String.valueOf(rnumber) ;
                     yzm = Integer.toString(rnumber);
-                    String content="您本次注册的验证码为： " + yzm + " 。十分钟内有效，请十分钟内在注册界面输入此验证码！ 如您没有进行注册操作，无需理会此邮件!";
+                    String content="The verification code you registered this time is： " + yzm + " .Valid within ten minutes, please enter this verification code in the registration interface within 10 minutes! If you have not registered, you don't need to pay attention to this email.!";
 
                     try {
-                        sendEmail(youxiang.getText().toString().trim(),"“KnowingChina”帐号注册邮件!", content);
+                        sendEmail(youxiang.getText().toString().trim(),"“KnowingChina”Account registration email!", content);
                         flag=1;
                     } catch (Exception e) {
                         flag=0;
@@ -100,7 +100,7 @@ public class Regesiter extends AppCompatActivity {
                     }
                     dialogLoading.dismiss();
                     if (flag==1) {
-                        alertDialog.setTitle("系统提示").setMessage("验证码获取成功，请注册邮箱查看！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        alertDialog.setTitle("system hint").setMessage("The verification code is successfully obtained. Please register your email to view it！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -110,7 +110,7 @@ public class Regesiter extends AppCompatActivity {
                             }
                         }).show();
                     } else {
-                        alertDialog.setTitle("系统提示").setMessage("验证码获取失败，请检查网络并重新获取！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        alertDialog.setTitle("system hint").setMessage("verification code acquisition failed, please check the network and re-acquire！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -120,7 +120,7 @@ public class Regesiter extends AppCompatActivity {
                         }).show();
                     }
                 }else {
-                    alertDialog.setTitle("系统提示").setMessage("请输入完整的且合法的邮箱！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    alertDialog.setTitle("system hint").setMessage("Please enter a full and valid email address！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -172,7 +172,7 @@ public class Regesiter extends AppCompatActivity {
                                 zhuce.setVisibility(zhuce.INVISIBLE);
                                 getyanzhengma.setVisibility(getyanzhengma.INVISIBLE);
                                 chakanyouxiang.setVisibility(chakanyouxiang.INVISIBLE);
-                                Toast.makeText (Regesiter.this,"帐号注册成功", Toast.LENGTH_LONG ).show ();
+                                Toast.makeText (Regesiter.this,"Account registration is successful", Toast.LENGTH_LONG ).show ();
                                 Regesiter.this.finish();
 
                             }else {
@@ -184,13 +184,13 @@ public class Regesiter extends AppCompatActivity {
 
                         @Override
                         public void onError(Object tag, Throwable e) {
-                            Toast.makeText(Regesiter.this, "注册失败" + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Regesiter.this, "registration failed" + e, Toast.LENGTH_SHORT).show();
 
                         }
 
                         @Override
                         public void onCancel(Object tag, Throwable e) {
-                            Toast.makeText(Regesiter.this, "注册失败" + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Regesiter.this, "registration failed" + e, Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -201,7 +201,7 @@ public class Regesiter extends AppCompatActivity {
 
                 }
                 else {
-                    alertDialog.setTitle("系统提示").setMessage("验证码不正确，请登录邮箱查看，或者重新获取验证码！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    alertDialog.setTitle("system hint").setMessage("The verification code is incorrect. Please log in to check the email or re-acquire the verification code.！").setPositiveButton("comfirm", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -230,7 +230,7 @@ public class Regesiter extends AppCompatActivity {
                     rnumber = (int) (Math.random() * 100000);
                     //yzm=String.valueOf(rnumber) ;
                     yzm = Integer.toString(rnumber);
-                    String content="您本次注册的验证码为： " + yzm + " 。十分钟内有效，请十分钟内在注册界面输入此验证码！ 如您没有进行注册操作，无需理会此邮件!";
+                    String content="The verification code you registered this time is： " + yzm + " 。Valid within ten minutes, please enter this verification code in the registration interface within 10 minutes! If you have not registered, you don't need to pay attention to this email!";
 
                     try {
                         sendEmail(youxiang.getText().toString().trim(),"“KnowingChina”帐号注册邮件!", content);
@@ -241,7 +241,7 @@ public class Regesiter extends AppCompatActivity {
                     }
                     dialogLoading.dismiss();
                     if (flag==1) {
-                        alertDialog.setTitle("系统提示").setMessage("验证码获取成功，请注册邮箱查看！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        alertDialog.setTitle("system hint").setMessage("The verification code is successfully obtained. Please register your email to view it！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -251,7 +251,7 @@ public class Regesiter extends AppCompatActivity {
                             }
                         }).show();
                     } else {
-                        alertDialog.setTitle("系统提示").setMessage("验证码获取失败，请检查网络并重新获取！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        alertDialog.setTitle("system hint").setMessage("verification code acquisition failed, please check the network and re-acquire！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -261,7 +261,7 @@ public class Regesiter extends AppCompatActivity {
                         }).show();
                     }
                 }else {
-                    alertDialog.setTitle("系统提示").setMessage("请输入完整的且合法的邮箱！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    alertDialog.setTitle("system hint").setMessage("Please enter a full and valid email address！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -293,7 +293,7 @@ public class Regesiter extends AppCompatActivity {
         String host = "smtp.qq.com";
         String address = "1320259466@qq.com";
         String from = "1320259466@qq.com";
-        String password = "zyeqcneqptmpbafe";// 密码fcucszzgvpodhiff
+        String password = "fcucszzgvpodhiff";// 密码fcucszzgvpodhiff  zyeqcneqptmpbafe
         if ("".equals(to) || to == null) {
             to = "1272275196@qq.com";
         }
@@ -369,31 +369,37 @@ public class Regesiter extends AppCompatActivity {
     public Boolean panduan(){
         if (nick.getText().toString().trim()==null||nick.getText().toString().trim().length()<2||nick.getText().toString().trim()==""){
             nick.requestFocus();
-            shuoming.setText("昵称不能为空！");
+            shuoming.setText("name should be filled！");
 
             return false;
         }
         else if (youxiang.getText().toString().trim()==null||youxiang.getText().toString().trim()==""||youxiang.getText().toString().trim().length()<2){
             youxiang.requestFocus();
-            shuoming.setText("邮箱不能为空！");
+            shuoming.setText("E-mail can not be empty！");
 
             return false;
         }
         else if (pass.getText().toString().trim()==null||pass.getText().toString().trim()==""||pass.getText().toString().trim().length()<2){
             pass.requestFocus();
-            shuoming.setText("设置密码不能为空！");
+            shuoming.setText("Setting password cannot be empty！");
 
             return false;
         }
         else if(comfirm.getText().toString().trim()==null||comfirm.getText().toString().trim()==""||comfirm.getText().toString().trim().length()<2){
             comfirm.requestFocus();
-            shuoming.setText("确认密码不能为空！");
+            shuoming.setText("confirm password can not be blank！");
             return false;
         }
         else if (!comfirm.getText().toString().trim().equals(pass.getText().toString().trim())){
             comfirm.setText("");
             comfirm.requestFocus();
-            shuoming.setText("两次密码不一致，请重新输入！");
+            shuoming.setText("The passwords are inconsistent twice, please re-enter！");
+            return false;
+        }
+        else if (!yanzheng.getText().toString().trim().equals(yzm)||yzm==null||yanzheng.getText().toString().trim()==null||yanzheng.getText().toString().trim()==""||yanzheng.getText().toString().trim().length()<2){
+            shuoming.setText("Incorrect verification code！");
+            yanzheng.setText("");
+            yanzheng.requestFocus();
             return false;
         }
         else if (!yanzheng.getText().toString().trim().equals(yzm)||yzm==null||yanzheng.getText().toString().trim()==null||yanzheng.getText().toString().trim()==""||yanzheng.getText().toString().trim().length()<2){

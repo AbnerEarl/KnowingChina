@@ -62,6 +62,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             etNumber.setText ( userInfo.get ( "number" ) );
             etPassword.setText ( userInfo.get ( "password" ) );
         }
+
+
+
+        loginAccount();
     }
 
     private void initView() {
@@ -76,28 +80,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //点击按钮获取账号和密码
-                String loginName = etNumber.getText ().toString ().trim ();
-                String passWord = etPassword.getText ().toString ();
-                //检查用户名密码是否为空
-                if (TextUtils.isEmpty ( loginName )){
-                    Toast.makeText ( LoginActivity.this,"请输入账号", Toast.LENGTH_LONG ).show ();
-                    return;
-                }
-                if (TextUtils.isEmpty ( passWord )){
-                    Toast.makeText ( LoginActivity.this,"请输入密码", Toast.LENGTH_LONG ).show ();
-                    return;
-                }
-
-
-
-                if (!loginName.equals("")&&!passWord.equals("")){
-                    userLogin(loginName,passWord);
-                }else {
-                    Toast.makeText (LoginActivity.this,"请输入合法的用户名或者密码！", Toast.LENGTH_LONG ).show ();
-                }
+                loginAccount();
             }
         });
+
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +96,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+    private void loginAccount(){
+        //点击按钮获取账号和密码
+        String loginName = etNumber.getText ().toString ().trim ();
+        String passWord = etPassword.getText ().toString ();
+        //检查用户名密码是否为空
+        if (TextUtils.isEmpty ( loginName )){
+            Toast.makeText ( LoginActivity.this,"Please enter the account", Toast.LENGTH_LONG ).show ();
+            return;
+        }
+        if (TextUtils.isEmpty ( passWord )){
+            Toast.makeText ( LoginActivity.this,"Please enter password", Toast.LENGTH_LONG ).show ();
+            return;
+        }
+
+
+
+        if (!loginName.equals("")&&!passWord.equals("")){
+            userLogin(loginName,passWord);
+        }else {
+            Toast.makeText (LoginActivity.this,"Please enter a valid username or password！", Toast.LENGTH_LONG ).show ();
+        }
+    }
 
     @SuppressLint("NewApi")
     @Override
@@ -119,9 +127,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case REQUEST_CODE_WRITE_EXTERNAL_STORAGE: {
                 for (int i = 0; i < permissions.length; i++) {
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(this, "允许写存储！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Write enabled storage！", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "未允许写存储！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Write storage is not allowed！", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -129,10 +137,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case REQUEST_CODE_READ_EXTERNAL_STORAGE_PERMISSIONS: {
                 for (int i = 0; i < permissions.length; i++) {
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        Toast.makeText(this, "允许读存储！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Write enabled storage！", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Toast.makeText(this, "未允许读存储！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Write storage is not allowed！", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -152,11 +160,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String passWord = etPassword.getText ().toString ();
         //检查用户名密码是否为空
         if (TextUtils.isEmpty ( loginName )){
-            Toast.makeText ( this,"请输入账号", Toast.LENGTH_LONG ).show ();
+            Toast.makeText ( this,"Please enter the account", Toast.LENGTH_LONG ).show ();
             return;
         }
         if (TextUtils.isEmpty ( passWord )){
-            Toast.makeText ( this,"请输入密码", Toast.LENGTH_LONG ).show ();
+            Toast.makeText ( this,"Please enter password", Toast.LENGTH_LONG ).show ();
             return;
         }
 
@@ -170,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }else {
-            Toast.makeText (LoginActivity.this,"请输入合法的用户名或者密码！", Toast.LENGTH_LONG ).show ();
+            Toast.makeText (LoginActivity.this,"Please enter a valid username or password！", Toast.LENGTH_LONG ).show ();
         }
 
 
@@ -211,13 +219,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         @Override
                         public void onError(Object tag, Throwable e) {
-                            Toast.makeText(LoginActivity.this, "登录失败" + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Login failed" + e, Toast.LENGTH_SHORT).show();
 
                         }
 
                         @Override
                         public void onCancel(Object tag, Throwable e) {
-                            Toast.makeText(LoginActivity.this, "登录失败" + e, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Login failed" + e, Toast.LENGTH_SHORT).show();
 
                         }
                     });

@@ -26,15 +26,18 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapOptions;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
+import com.amap.api.services.core.ServiceSettings;
 import com.example.frank.wuhanjikong.R;
 import com.example.frank.wuhanjikong.config.PersonInfo;
 import com.example.frank.wuhanjikong.entity.ContentInfo;
@@ -111,8 +114,31 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_map);
+        ServiceSettings.getInstance().setLanguage(ServiceSettings.ENGLISH);//默认是中文ServiceSettings.CHINESE
+
+
+
+        // 定义北京市经纬度坐标（此处以北京坐标为例）
+        //LatLng centerBJPoint= new LatLng(30.438507859251835,114.26656527542318);
+     //   LatLng centerBJPoint= new LatLng(114.26656527542318,30.438507859251835);
+        // 定义了一个配置 AMap 对象的参数类
+        AMapOptions mapOptions = new AMapOptions();
+// 设置了一个可视范围的初始化位置
+// CameraPosition 第一个参数： 目标位置的屏幕中心点经纬度坐标。
+// CameraPosition 第二个参数： 目标可视区域的缩放级别
+// CameraPosition 第三个参数： 目标可视区域的倾斜度，以角度为单位。
+// CameraPosition 第四个参数： 可视区域指向的方向，以角度为单位，从正北向顺时针方向计算，从0度到360度
+     //   mapOptions.camera(new CameraPosition(centerBJPoint, 10f, 0, 0));
+// 定义一个 MapView 对象，构造方法中传入 mapOptions 参数类
+     //   MapView mapView = new MapView(this, mapOptions);
+// 调用 onCreate方法 对 MapView LayoutParams 设置
+     //   mapView.onCreate(savedInstanceState);
+
+
         init(savedInstanceState);
         mLocationTask = LocationTask.getInstance(getApplicationContext());
+
+
         mLocationTask.setOnLocationGetListener(this);
         mRegeocodeTask = new RegeocodeTask(getApplicationContext());
         RouteTask.getInstance(getApplicationContext())
@@ -134,8 +160,8 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
 
         SortStyle=(ImageView)this.findViewById(R.id.style_sort) ;
         dialogLoading = new ProgressDialog(MapMainActivity.this);
-        dialogLoading.setTitle("提示信息");
-        dialogLoading.setMessage("正在处理，请稍候...");
+        dialogLoading.setTitle("hint");
+        dialogLoading.setMessage("loading...");
 
 
        /* moreDetail.setOnTouchListener(new View.OnTouchListener() {
@@ -212,8 +238,8 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                //linearLayout.addView(distinct);
                linearLayout.addView(hsk2);
                linearLayout.addView(hsk3);
-               linearLayout.addView(hsk4);
-               linearLayout.addView(hsk5);
+              // linearLayout.addView(hsk4);
+              // linearLayout.addView(hsk5);
                linearLayout.addView(hsk6);
 
 
@@ -291,7 +317,7 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                    dialogLoading.show();
                    getMapShopByData(JSON.toJSONString(map));
                }else {
-                   Toast.makeText(MapMainActivity.this,"请先选中一个地点",Toast.LENGTH_SHORT).show();
+                   Toast.makeText(MapMainActivity.this,"please choose a place first",Toast.LENGTH_SHORT).show();
                }
            }
        });
@@ -406,12 +432,21 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                 R.drawable.icon_loaction_start)));
         mPositionMark = mAmap.addMarker(markerOptions);
         mPositionMark.setPositionByPixels(mMapView.getWidth() / 2, mMapView.getHeight() / 2);
-        mLocationTask.startSingleLocate();
+       // mLocationTask.startSingleLocate();
 
-        LatLng marker1 = new LatLng(30.445417, 14.274518);
+        LatLng marker1 = new LatLng(30.445417, 114.274518);
         //设置中心点和缩放比例
         mAmap.moveCamera(CameraUpdateFactory.changeLatLng(marker1));
-        mAmap.moveCamera(CameraUpdateFactory.zoomTo(200));
+        mAmap.moveCamera(CameraUpdateFactory.zoomTo(14));
+        mAmap.setMapLanguage("en");
+        ServiceSettings.getInstance().setLanguage(ServiceSettings.ENGLISH);//默认是中文ServiceSettings.CHINESE
+
+        //限制地图范围
+        /*LatLng southwestLatLng = new LatLng(30.430317693318482, 114.26613209867469);
+        LatLng northeastLatLng = new LatLng(30.44626608589725, 114.26700247548511);
+        LatLngBounds latLngBounds = new LatLngBounds(southwestLatLng, northeastLatLng);
+        mAmap.setMapStatusLimits(latLngBounds);*/
+
     }
 
     @Override
@@ -479,7 +514,7 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                 .getInstance(getApplicationContext()).getEndPoint().address);
         mRouteCostText.setText(String.format("预估费用%.2f元，距离%.1fkm,用时%d分", cost,
                 distance, duration));
-        mDestinationButton.setText("路线");
+        mDestinationButton.setText("route");
         mCancelButton.setVisibility(View.VISIBLE);
        // mDestinationButton.setOnClickListener(null);
         mDestinationButton.setOnClickListener(new View.OnClickListener() {
@@ -521,7 +556,7 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                         public void onNext(Object tag, String response) {
                             dialogLoading.dismiss();
                             try{
-                                if (!response.contains("没有数据")&&!response.contains("查询失败")){
+                                if (!response.contains("no data")&&!response.contains("failed to search")){
 
                                     final MapShop mapShop = JSON.parseObject(response,MapShop.class);
                                     if (mapShop!=null){
@@ -534,30 +569,30 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                         final TextView discussInfo=(TextView)view.findViewById(R.id.textView28);
                                         Button joinDiscuss=(Button)view.findViewById(R.id.button38);
                                         mapName.setText(mapShop.getMapName());
-                                        shopName.setText("店铺名称："+mapShop.getShopName());
+                                        shopName.setText("shop name："+mapShop.getShopName());
                                         if (mapShop.getShopAddress()!=null){
-                                            shopAddress.setText("店铺地址："+mapShop.getShopAddress());
+                                            shopAddress.setText("shop address："+mapShop.getShopAddress());
                                         }else {
-                                            shopAddress.setText("店铺地址："+"暂无收录地址");
+                                            shopAddress.setText("shop address："+"no valid address");
                                         }
 
-                                        shopStar.setText("综合评分："+mapShop.getShopStar());
+                                        shopStar.setText("remark："+mapShop.getShopStar());
                                         if (mapShop.getDiscussInfo()!=null){
                                             discussInfo.setText(mapShop.getDiscussInfo());
                                         }else {
-                                            discussInfo.setText("暂无评论");
+                                            discussInfo.setText("no cotent");
                                         }
                                         final EditText editText=new EditText(MapMainActivity.this);
-                                        editText.setHint("请输入评论信息……");
+                                        editText.setHint("please enter your comment……");
                                         joinDiscuss.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
 
-                                                new AlertDialog.Builder(MapMainActivity.this).setView(editText).setTitle("我要评论").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                new AlertDialog.Builder(MapMainActivity.this).setView(editText).setTitle("comment it").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         if (editText.getText()!=null&&!editText.getText().toString().trim().equals("")) {
-                                                            if (discussInfo.getText().toString().contains("暂无评论")) {
+                                                            if (discussInfo.getText().toString().contains("no comment")) {
                                                                 discussInfo.setText(PersonInfo.localSysUser.getNickName() + ":" + editText.getText());
                                                             } else {
                                                                 String temDiscuss=discussInfo.getText().toString() + "\n";
@@ -569,22 +604,22 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                                             dialogLoading.show();
                                                             addDiscussShop(JSON.toJSONString(map));
                                                         }else {
-                                                            Toast.makeText(MapMainActivity.this,"请输入评论内容",Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(MapMainActivity.this,"please enter your comment",Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
-                                                }).setNegativeButton("取消",null).show();
+                                                }).setNegativeButton("cancel",null).show();
                                             }
                                         });
 
                                         alertDialog.setView(view);
-                                        alertDialog.setButton("取消", new DialogInterface.OnClickListener() {
+                                        alertDialog.setButton("cancel", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 alertDialog.dismiss();
                                             }
                                         });
 
-                                        alertDialog.setButton("确定", new DialogInterface.OnClickListener() {
+                                        alertDialog.setButton("confirm", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 alertDialog.dismiss();
@@ -603,16 +638,16 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                     Button recommend=(Button)view.findViewById(R.id.button39);
                                     city.setText("City："+positionEntitySelected.city);
                                     shopName.setText(""+positionEntitySelected.address);
-                                    latitu.setText("纬度："+positionEntitySelected.latitue);
-                                    longtitu.setText("精度"+positionEntitySelected.longitude);
+                                    latitu.setText("latitude："+positionEntitySelected.latitue);
+                                    longtitu.setText("longitude"+positionEntitySelected.longitude);
 
                                     Spinner spinner = (Spinner)view.findViewById(R.id.spinner);//获取spinner组件的id 用于以后对其操作
                                     final ArrayList<String> arrayList = new ArrayList<String>();//创建数组列表 用来存放以后要显示的内容
                                     arrayList.add("food");//添加要显示的内容
                                     arrayList.add("store");
                                     arrayList.add("bar");
-                                    arrayList.add("camera");
-                                    arrayList.add("beaty");
+                                    //arrayList.add("camera");
+                                    //arrayList.add("beaty");
                                     arrayList.add("other");
 
 
@@ -637,24 +672,24 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                     final LinearLayout linearLayout_recommand=new LinearLayout(MapMainActivity.this);
                                     linearLayout_recommand.setOrientation(LinearLayout.VERTICAL);
                                      final EditText editText_reason=new EditText(MapMainActivity.this);
-                                    editText_reason.setHint("请输入推荐理由……");
+                                    editText_reason.setHint("reasons for recommendation……");
                                      final EditText editText_shop_name=new EditText(MapMainActivity.this);
-                                    editText_shop_name.setHint("请输入商铺名称……");
+                                    editText_shop_name.setHint("enter shop name……");
                                     linearLayout_recommand.addView(editText_shop_name);
                                     linearLayout_recommand.addView(editText_reason);
                                     recommend.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
 
-                                            new AlertDialog.Builder(MapMainActivity.this).setView(linearLayout_recommand).setTitle("我要推荐").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                            new AlertDialog.Builder(MapMainActivity.this).setView(linearLayout_recommand).setTitle("recommend it").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
 
                                                     if (editText_reason.getText()==null||editText_reason.getText().toString().trim().equals("")){
-                                                        Toast.makeText(MapMainActivity.this,"请输入推荐理由",Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MapMainActivity.this,"reasons for recommendation",Toast.LENGTH_SHORT).show();
                                                         return;
                                                     }else if (editText_shop_name.getText()==null||editText_shop_name.getText().toString().trim().equals("")){
-                                                        Toast.makeText(MapMainActivity.this,"请输入商铺名称",Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MapMainActivity.this,"enter shop name",Toast.LENGTH_SHORT).show();
                                                         return;
                                                     }else {
                                                         Map<String, Object> map = new HashMap<>();
@@ -671,20 +706,20 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                                                     }
 
                                                 }
-                                            }).setNegativeButton("取消",null).show();
+                                            }).setNegativeButton("cancel",null).show();
                                         }
                                     });
 
 
                                     alertDialog.setView(view);
-                                    alertDialog.setButton("取消", new DialogInterface.OnClickListener() {
+                                    alertDialog.setButton("cancel", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             alertDialog.dismiss();
                                         }
                                     });
 
-                                    alertDialog.setButton("确定", new DialogInterface.OnClickListener() {
+                                    alertDialog.setButton("confirm", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             alertDialog.dismiss();
@@ -738,20 +773,22 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                         public void onNext(Object tag, String response) {
                             dialogLoading.dismiss();
                             try{
-                                if (!response.contains("没有数据")&&!response.contains("查询失败")){
+                                if (!response.contains("no data")&&!response.contains("failed to search")){
 
                                     List<Double> latituList=new ArrayList<>();
                                     List<Double> longtituList=new ArrayList<>();
+                                    List<Integer> shopStyle=new ArrayList<>();
                                     List<MapShop> mapShopList = JSON.parseObject(response,new TypeReference< List<MapShop>>(){});
                                     for (MapShop mapShop:mapShopList){
                                         latituList.add(mapShop.getShopLatitude());
                                         longtituList.add(mapShop.getShopLongitude());
+                                        shopStyle.add(mapShop.getMapStyle());
                                     }
 
                                     if (latituList.size()>0){
-                                        Utils.addEmulateData(mAmap, mStartPosition,latituList,longtituList);
+                                        Utils.addEmulateData(mAmap, mStartPosition,latituList,longtituList,shopStyle);
                                     }else {
-                                        Toast.makeText(MapMainActivity.this,"暂时没有推荐的地方",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MapMainActivity.this,"no recommend place",Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -799,20 +836,22 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                         public void onNext(Object tag, String response) {
                             dialogLoading.dismiss();
                             try{
-                                if (!response.contains("没有数据")&&!response.contains("查询失败")){
+                                if (!response.contains("no data")&&!response.contains("failed to search")){
 
                                     List<Double> latituList=new ArrayList<>();
                                     List<Double> longtituList=new ArrayList<>();
+                                    List<Integer> shopStyle=new ArrayList<>();
                                     List<MapShop> mapShopList = JSON.parseObject(response,new TypeReference< List<MapShop>>(){});
                                     for (MapShop mapShop:mapShopList){
                                         latituList.add(mapShop.getShopLatitude());
                                         longtituList.add(mapShop.getShopLongitude());
+                                        shopStyle.add(mapShop.getMapStyle());
                                     }
 
                                     if (latituList.size()>0){
-                                        Utils.addEmulateData(mAmap, mStartPosition,latituList,longtituList);
+                                        Utils.addEmulateData(mAmap, mStartPosition,latituList,longtituList,shopStyle);
                                     }else {
-                                        Toast.makeText(MapMainActivity.this,"暂时没有推荐的地方",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MapMainActivity.this,"no recommend place",Toast.LENGTH_SHORT).show();
                                     }
                                 }
 
@@ -909,7 +948,7 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
                         public void onNext(Object tag, String response) {
                             dialogLoading.dismiss();
                             try{
-                                if (response.contains("评论成功")){
+                                if (response.contains("comment successful")){
 
                                 }
                                 Toast.makeText(MapMainActivity.this,response,Toast.LENGTH_SHORT).show();

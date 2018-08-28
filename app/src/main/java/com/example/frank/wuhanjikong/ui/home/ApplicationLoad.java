@@ -61,7 +61,7 @@ import java.util.Map;
 
 public class ApplicationLoad extends AppCompatActivity {
 
-    public WebView myWebView;
+    public WebView myWebView,textShow;
     private ProgressDialog dialog=null;
     private String urrl;
 
@@ -171,11 +171,11 @@ public class ApplicationLoad extends AppCompatActivity {
                 //linearLayout.addView(distinct);
                 linearLayout.addView(hsk2);
                 linearLayout.addView(hsk3);
-                linearLayout.addView(hsk4);
+                /*linearLayout.addView(hsk4);
                 linearLayout.addView(hsk5);
                 linearLayout.addView(hsk6);
                 linearLayout.addView(hsk7);
-                linearLayout.addView(hsk8);
+                linearLayout.addView(hsk8);*/
 
                 final AlertDialog alertDialog=new AlertDialog.Builder(ApplicationLoad.this).create();
 
@@ -284,6 +284,11 @@ public class ApplicationLoad extends AppCompatActivity {
 
 
         myWebView = (WebView) findViewById(R.id.webview1);
+        textShow = (WebView) findViewById(R.id.webview_text_show);
+
+        String htmlText = " %s ";
+       // textShow.loadData(String.format(htmlText, contentInfo), "text/html", "utf-8");
+
 
         // myWebView.setWebViewClient(new WebViewClient());
 
@@ -461,7 +466,7 @@ public class ApplicationLoad extends AppCompatActivity {
                         @Override
                         public void onNext(Object tag, String response) {
                             try{
-                                if (!response.contains("没有数据")&&!response.contains("查询失败")){
+                                if (!response.contains("no data")&&!response.contains("failed to search")){
 
                                     HskContent hskContent = JSON.parseObject(response,HskContent.class);
                                     textViewTitle.setText(hskContent.getContentTitle());

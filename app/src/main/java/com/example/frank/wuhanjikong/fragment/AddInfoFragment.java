@@ -48,12 +48,12 @@ public class AddInfoFragment extends Fragment {
                 HashMap<String,Object> map=new HashMap<>();
                 map.put("nickName", PersonInfo.userName);
                 map.put("contentInfo",editText.getText().toString());
-                map.put("discussInfo","暂时没有评论");
+                map.put("discussInfo","no comment");
                 map.put("tag","4");
                 map.put("time","刚刚");
                 map.put("url",photo.getText().toString());
                 PublicInfo.listItemCation.add(0,map);
-                Toast.makeText(getActivity(),"发布成功，可以在关注界面查看您的动态！",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"send successful！",Toast.LENGTH_LONG).show();
                 editText.setText("");
             }
         });

@@ -56,6 +56,7 @@
                 android:background="@drawable/editext_shape"
                 android:ems="10"
                 android:gravity="center"
+                android:focusable="true"
                 android:hint="say something......."
                 android:inputType="textPersonName"
                 android:textSize="20sp" />
@@ -71,6 +72,7 @@
                 android:drawablePadding="15dp"
                 android:ems="10"
                 android:hint="Photo/Video"
+                android:focusable="false"
                 android:inputType="textPersonName"
                 android:textSize="20sp" />
 
@@ -81,11 +83,10 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
                 android:drawableLeft="@drawable/point_of_interest"
                 android:drawablePadding="15dp"
                 android:ems="10"
+                android:focusable="false"
                 android:hint="location"
                 android:inputType="textPersonName"
                 android:textSize="20sp" />
@@ -97,10 +98,11 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@drawable/email"
+                android:focusable="false"
+                android:drawableLeft="@drawable/tags"
                 android:drawablePadding="15dp"
                 android:ems="10"
-                android:hint="Mention"
+                android:hint="Theme"
                 android:inputType="textPersonName"
                 android:textSize="20sp" />
 

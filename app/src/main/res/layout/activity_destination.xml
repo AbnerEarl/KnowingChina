@@ -36,8 +36,8 @@
             android:gravity="center"
             android:paddingLeft="@dimen/horizontal_padding"
             android:paddingRight="@dimen/horizontal_padding"
-            android:textColor="@color/black"
-            android:text="确定" />
+            android:text="confirm"
+            android:textColor="@color/black" />
 
     </LinearLayout>
     <View

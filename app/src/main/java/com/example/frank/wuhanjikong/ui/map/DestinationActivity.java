@@ -72,7 +72,7 @@ public class DestinationActivity  extends Activity implements View.OnClickListen
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if(RouteTask.getInstance(getApplicationContext()).getStartPoint()==null){
-            Toast.makeText(getApplicationContext(), "检查网络，Key等问题", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "check your internet", Toast.LENGTH_SHORT).show();
             return;
         }
         InputTipTask.getInstance( mRecomandAdapter).searchTips(getApplicationContext(),s.toString(),

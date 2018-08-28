@@ -63,7 +63,10 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView28"
         android:layout_marginTop="32dp"
-        android:text="我要评论" />
+        android:background="@drawable/shape"
+        android:text="content it"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView33"
@@ -73,7 +76,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView27"
         android:layout_marginTop="16dp"
-        android:text="评论信息：" />
+        android:text="info:" />
 
     <TextView
         android:id="@+id/textView34"

@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Knowing China</string>
+    <string name="app_name">KnowingChina</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="car_use_title">寻找餐厅</string>
-    <string name="destination_button">查询目的地</string>
-    <string name="cancel_button">取消</string>
-    <string name="destination_title">请输入目的地</string>
+    <string name="car_use_title">find restaurant</string>
+    <string name="destination_button">where to go</string>
+    <string name="cancel_button">cancel</string>
+    <string name="destination_title">Destination</string>
 </resources>

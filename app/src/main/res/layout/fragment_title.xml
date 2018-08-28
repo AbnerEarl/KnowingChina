@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/menu_more"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/ic_menu_black_18dp" />
 
@@ -18,25 +18,30 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_weight="1"
-        android:focusable="false"
         android:background="@drawable/shape"
-        android:drawableLeft=" @drawable/search"
         android:drawablePadding="10dp"
         android:ems="10"
-        android:gravity="fill"
+        android:gravity="center"
         android:hint="search"
         android:inputType="textPersonName"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
 
+    <ImageButton
+        android:id="@+id/imageButton_search"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/search_bar" />
+
     <ImageView
         android:id="@+id/noti"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/ic_notifications_none_black_18dp" />
+        android:background="@drawable/ic_notifications_none_black_18dp"
+        android:visibility="invisible" />
 
 </LinearLayout>

@@ -15,11 +15,11 @@
         android:layout_weight="1"
         android:background="@drawable/bar_selector"
         android:button="@null"
-        android:drawableTop="@drawable/home_red"
+        android:drawableTop="@drawable/home"
         android:gravity="center"
         android:paddingLeft="0dp"
         android:text="ChinaTown"
-        android:textColor="#EE5C42"/>
+        android:textColor="#A8A8A8" />
 
     <RadioButton
         android:id="@+id/rb_complete"

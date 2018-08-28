@@ -4,6 +4,7 @@
     android:id="@+id/activity_regesiter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/signinin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -11,145 +12,161 @@
     tools:context="com.example.frank.wuhanjikong.ui.login.Regesiter">
 
     <ProgressBar
+        android:id="@+id/progressBar2"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:id="@+id/progressBar2"
-        android:layout_alignParentEnd="true"
-        android:background="@android:color/background_light"
-        tools:visibility="invisible"
-        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:visibility="invisible" />
-
-    <TextView
-        android:text="靓丽昵称："
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="33dp"
-        android:id="@+id/textView3r" />
+        android:background="@android:color/background_light"
+        android:visibility="invisible"
+        tools:visibility="invisible" />
 
     <TextView
-        android:text="设置密码："
+        android:id="@+id/textView3r"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView8r"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="Full Name：" />
+
+    <TextView
+        android:id="@+id/textView4r"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView3r"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="61dp"
-        android:id="@+id/textView4r" />
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Password：" />
 
     <TextView
-        android:text="确认密码："
+        android:id="@+id/textView5r"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView4r"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="58dp"
-        android:id="@+id/textView5r" />
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Identify again：" />
 
     <TextView
-        android:text="邮箱帐号："
+        android:id="@+id/textView6r"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView5r"
+        android:layout_height="40dp"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="58dp"
-        android:id="@+id/textView6r" />
+        android:layout_below="@+id/textView5r"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="Email：" />
 
     <Button
-        android:text="查看验证码"
+        android:id="@+id/button3r"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/button2r"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/button3r" />
+        android:text="查看验证码"
+        android:visibility="invisible" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignTop="@+id/textView3r"
         android:id="@+id/editText5r"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView3r" />
+        android:layout_alignTop="@+id/textView3r"
+        android:layout_toEndOf="@+id/textView3r"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_alignTop="@+id/textView4r"
         android:id="@+id/editText6r"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView4r" />
+        android:layout_alignTop="@+id/textView4r"
+        android:layout_toEndOf="@+id/textView4r"
+        android:ems="10"
+        android:inputType="textPassword" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_alignTop="@+id/textView5r"
         android:id="@+id/editText7r"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView5r" />
+        android:layout_alignTop="@+id/textView5r"
+        android:layout_toEndOf="@+id/textView5r"
+        android:ems="10"
+        android:inputType="textPassword" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:layout_alignTop="@+id/textView6r"
         android:id="@+id/editText9r"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView6r" />
+        android:layout_alignTop="@+id/textView6r"
+        android:layout_toEndOf="@+id/textView6r"
+        android:ems="10"
+        android:inputType="textEmailAddress" />
 
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_alignTop="@+id/textView7r"
         android:id="@+id/editText10r"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView7r" />
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/textView7r"
+        android:layout_toEndOf="@+id/textView7r"
+        android:layout_toLeftOf="@+id/button2r"
+        android:layout_toRightOf="@+id/textView7r"
+        android:layout_toStartOf="@+id/button2r"
+        android:ems="10"
+        android:inputType="number"
+        android:minWidth="100dp" />
 
     <TextView
-        android:text="验证码："
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
         android:id="@+id/textView7r"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/editText9r"
-        android:layout_alignParentStart="true" />
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="Verificaton code：" />
 
     <Button
         android:id="@+id/button2r"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText10r"
-        android:layout_alignStart="@+id/editText10r"
-        android:layout_below="@+id/editText10r"
-        android:text="获取验证码" />
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/editText10r"
+        android:text="Get" />
 
     <Button
-        android:text="注册"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/button7r"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button3r"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/shape"
+        android:text="Sign in"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:text="欢迎注册！"
+        android:id="@+id/textView8r"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView8r" />
+        android:layout_marginTop="28dp"
+        android:text="Welcome to register！"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

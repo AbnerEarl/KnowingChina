@@ -253,7 +253,7 @@ public class StringUtils {
     }
 
     /**
-     * 确定是否是时间戳
+     * confirm是否是时间戳
      *
      * @param str
      * @return

@@ -51,8 +51,8 @@ public class LocationTask implements AMapLocationListener,
 		AMapLocationClientOption option=new AMapLocationClientOption();
 		option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
 		option.setOnceLocation(true);
+		option.setGeoLanguage(AMapLocationClientOption.GeoLanguage.EN);
 		mLocationClient.setLocationOption(option);
-
 		mLocationClient.startLocation();
 
 	}
@@ -66,6 +66,7 @@ public class LocationTask implements AMapLocationListener,
 		option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
 		option.setOnceLocation(false);
 		option.setInterval(8*1000);
+		option.setGeoLanguage(AMapLocationClientOption.GeoLanguage.EN);
 		mLocationClient.setLocationOption(option);
 		mLocationClient.startLocation();
 

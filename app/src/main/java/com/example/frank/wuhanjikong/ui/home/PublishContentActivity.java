@@ -55,15 +55,15 @@ public class PublishContentActivity extends AppCompatActivity {
             }
         });
         dialog = new ProgressDialog(PublishContentActivity.this);
-        dialog.setTitle("提示信息");
-        dialog.setMessage("正在处理，请稍候...");
+        dialog.setTitle("hint");
+        dialog.setMessage("loading...");
 
         publishContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String contentInfo=content.getText().toString();
                 if (contentInfo==null||contentInfo.trim().equals("")||contentInfo.length()<2){
-                    Toast.makeText(PublishContentActivity.this,"请输入发表的内容",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PublishContentActivity.this,"please enter your content",Toast.LENGTH_SHORT).show();
                 }else {
                     HashMap<String ,String> map=new HashMap<>();
                     if (contentInfo.length()>15){

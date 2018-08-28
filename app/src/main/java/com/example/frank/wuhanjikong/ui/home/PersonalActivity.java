@@ -102,7 +102,7 @@ public class PersonalActivity extends AppCompatActivity {
         myCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(PersonalActivity.this).setMessage("敬请期待！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(PersonalActivity.this).setMessage("coming soon！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -114,7 +114,7 @@ public class PersonalActivity extends AppCompatActivity {
         myOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(PersonalActivity.this).setMessage("敬请期待！").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(PersonalActivity.this).setMessage("coming soon！").setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
