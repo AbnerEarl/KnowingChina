@@ -45,7 +45,7 @@ public class TitleFragment extends Fragment {
         person=view.findViewById(R.id.menu_more);
         startSearch=view.findViewById(R.id.imageButton_search);
 
-        Handler handler=new Handler();
+        /*Handler handler=new Handler();
         Runnable runnable=new Runnable() {
             @Override
             public void run() {
@@ -56,7 +56,7 @@ public class TitleFragment extends Fragment {
                 }
 
             }
-        };
+        };*/
        // handler.postDelayed(runnable,1000);
 
         startSearch.setVisibility(View.INVISIBLE);
@@ -73,6 +73,9 @@ public class TitleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 L.g("点击：","onclick");
+                search_keyword.setFocusable(true);
+                search_keyword.setFocusableInTouchMode(true);
+                search_keyword.requestFocus();
                 //startSearch.setVisibility(View.VISIBLE);
             }
         });
@@ -80,6 +83,9 @@ public class TitleFragment extends Fragment {
         search_keyword.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                search_keyword.setFocusable(true);
+                search_keyword.setFocusableInTouchMode(true);
+                search_keyword.requestFocus();
                 if (search_keyword.getText().toString().trim().length()>0){
                     startSearch.setVisibility(View.VISIBLE);
                 }else {

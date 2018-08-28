@@ -59,6 +59,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.codeboy.android.aligntextview.AlignTextView;
+
 public class ApplicationLoad extends AppCompatActivity {
 
     public WebView myWebView,textShow;
@@ -67,6 +69,7 @@ public class ApplicationLoad extends AppCompatActivity {
 
     private ImageButton back;
     private TextView title;
+    private AlignTextView contentArticle;
     private String titleInfo,contentInfo,contentId,contentType,vedioUrl;
     private TextView textViewTitle,textViewContent;
     private Button hsk;
@@ -89,6 +92,7 @@ public class ApplicationLoad extends AppCompatActivity {
 
         textViewTitle=(TextView)findViewById(R.id.textView25);
         textViewContent=(TextView)findViewById(R.id.textView23);
+        contentArticle=(AlignTextView)findViewById(R.id.alignTextView) ;
         hsk=(Button)this.findViewById(R.id.button28);
         back=(ImageButton)this.findViewById(R.id.titleback);
         title=(TextView)this.findViewById(R.id.titleplain);
@@ -102,7 +106,8 @@ public class ApplicationLoad extends AppCompatActivity {
             }
         });
         textViewTitle.setText(titleInfo);
-        textViewContent.setText(contentInfo);
+       // textViewContent.setText(contentInfo);
+        contentArticle.setText(contentInfo);
         String str = urrl;//http://www.google.cn/maps/@37.263579,74.9775024,4z?hl=en
         Context context=ApplicationLoad.this;
         hsk.setOnClickListener(new View.OnClickListener() {
@@ -470,8 +475,9 @@ public class ApplicationLoad extends AppCompatActivity {
 
                                     HskContent hskContent = JSON.parseObject(response,HskContent.class);
                                     textViewTitle.setText(hskContent.getContentTitle());
-                                    textViewContent.setText(hskContent.getContentText());
-                                    Toast.makeText(ApplicationLoad.this,"当前HSK等级为："+hskContent.getHskLevel(),Toast.LENGTH_SHORT).show();
+                                    //textViewContent.setText(hskContent.getContentText());
+                                    contentArticle.setText(hskContent.getContentText());
+                                    Toast.makeText(ApplicationLoad.this,"HSK level is："+hskContent.getHskLevel(),Toast.LENGTH_SHORT).show();
                                 }
 
 

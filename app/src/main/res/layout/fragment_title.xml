@@ -22,6 +22,7 @@
         android:background="@drawable/shape"
         android:drawablePadding="10dp"
         android:ems="10"
+        android:focusable="false"
         android:gravity="center"
         android:hint="search"
         android:inputType="textPersonName"
