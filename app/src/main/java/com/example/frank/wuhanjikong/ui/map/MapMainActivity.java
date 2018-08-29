@@ -429,7 +429,7 @@ public class MapMainActivity extends Activity  implements AMap.OnCameraChangeLis
         markerOptions.position(new LatLng(30.445417, 14.274518));
         markerOptions.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(getResources(),
-                                R.drawable.icon_loaction_start)));
+                                R.drawable.map_pin)));
         mPositionMark = mAmap.addMarker(markerOptions);
         mPositionMark.setPositionByPixels(mMapView.getWidth() / 2, mMapView.getHeight() / 2);
        // mLocationTask.startSingleLocate();

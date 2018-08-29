@@ -126,6 +126,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginBottom="10dp"
+                    android:background="#FFFFFF"
                     android:src="@drawable/add_location" />
 
                 <ImageView
@@ -136,6 +137,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="150dp"
                     android:layout_marginRight="@dimen/horizontal_margin"
+                    android:background="#FFFFFF"
                     android:src="@drawable/location_off" />
             </LinearLayout>
 
@@ -169,7 +171,7 @@
             <ImageView
                 android:id="@+id/imageView13"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
@@ -177,7 +179,7 @@
                 android:layout_below="@+id/frameLayout"
                 android:background="@color/background_color"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_more_horiz_black_18dp" />
+                android:src="@drawable/view_details" />
         </LinearLayout>
     </FrameLayout>
 

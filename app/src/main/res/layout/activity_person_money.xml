@@ -42,8 +42,9 @@
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
         android:text="Balance"
         app:layout_constraintStart_toEndOf="@+id/imageView10"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,8 +52,9 @@
     <TextView
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
         android:text="Coins"
         app:layout_constraintStart_toEndOf="@+id/imageView11"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
@@ -60,8 +62,9 @@
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="63dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
         android:text="Coupons"
         app:layout_constraintStart_toEndOf="@+id/imageView12"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />

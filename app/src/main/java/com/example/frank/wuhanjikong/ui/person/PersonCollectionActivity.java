@@ -76,8 +76,8 @@ public class PersonCollectionActivity extends AppCompatActivity {
         lv_info.setAdapter(myAdapter);//为ListView绑定Adapter
         getMessageInfo(PersonInfo.localSysUser.getUserId());
         dialog = new ProgressDialog(this);
-        dialog.setTitle("提示信息");
-        dialog.setMessage("正在处理，请稍候...");
+        dialog.setTitle("hint");
+        dialog.setMessage("loading...");
 
     }
 

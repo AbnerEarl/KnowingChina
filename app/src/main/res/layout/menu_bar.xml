@@ -4,7 +4,6 @@
     android:id="@+id/rg_menu"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#FFFFFF"
     android:orientation="horizontal">
 
     <!-- android:paddingLeft="0dp"加这个是为了让内容能够剧中 -->
