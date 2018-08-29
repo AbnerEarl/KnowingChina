@@ -125,7 +125,7 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent"
         android:text="HSK"
-        android:textColor="@color/green"
+        android:textColor="@color/red"
         android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>

@@ -27,7 +27,7 @@ public class StreamTool {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "获取失败";
+			return "failed to receive";
 		}
 	}
 	

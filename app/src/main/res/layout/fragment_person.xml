@@ -8,6 +8,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="\n  Features are under development, please look forward to it!" />
+        android:gravity="center"
+        android:text="Features are under development, please look forward to it!"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </FrameLayout>
